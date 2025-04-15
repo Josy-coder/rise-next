@@ -1,0 +1,23 @@
+name = "nonprofit-website"
+main = "build/index.js"
+compatibility_date = "2023-10-16"
+node_compat = true
+
+[site]
+bucket = "./build"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "nonprofit_db"
+database_id = "your-db-id-here"
+
+[[r2_buckets]]
+binding = "MEDIA_BUCKET"
+bucket_name = "nonprofit-media"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "your-kv-id-here"
+
+[vars]
+ENVIRONMENT = "production"
