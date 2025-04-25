@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { up } from '@auth/d1-adapter';
 import bcrypt from 'bcryptjs';

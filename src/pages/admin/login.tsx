@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import { getSession, signIn } from 'next-auth/react';
