@@ -1,4 +1,5 @@
-export const runtime = 'experimental-edge';
+export const runtime  = "nodejs";
+
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
