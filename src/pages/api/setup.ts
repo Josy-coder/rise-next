@@ -1,4 +1,4 @@
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { up } from '@auth/d1-adapter';
