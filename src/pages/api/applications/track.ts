@@ -105,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             where: and(
                 eq(schema.verificationTokens.token, token),
                 eq(schema.verificationTokens.type, 'application_auth'),
-                gt(schema.verificationTokens.expires, new Date())
+                gt(schema.verificationTokens.expires, new Date().getTime())
             ),
         });
 
