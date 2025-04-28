@@ -1,13 +1,8 @@
 import { NextResponse } from 'next/server';
-import { scrypt, randomBytes, timingSafeEqual } from 'crypto';
-import { promisify } from 'util';
 import { getDb, Env } from '@/db';
 import * as schema from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import jwt from '@tsndr/cloudflare-worker-jwt';
-
-// Convert callback-based scrypt to Promise-based
-const scryptAsync = promisify(scrypt);
 
 // Types
 export type UserRole = 'admin' | 'editor' | 'viewer';
@@ -39,11 +34,22 @@ const SESSION_DURATION = 7 * 24 * 60 * 60; // 7 days in seconds
  * Hash a password with a random salt using scrypt
  */
 export async function hashPassword(password: string): Promise<string> {
-    const salt = randomBytes(16);
-    const derivedKey = await scryptAsync(password, salt, 64);
-
-    // Format: salt.hash (both base64 encoded)
-    return `${salt.toString('base64')}.${Buffer.from(derivedKey as Buffer).toString('base64')}`;
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const key = await crypto.subtle.importKey(
+        'raw',
+        data,
+        { name: 'PBKDF2' },
+        false,
+        ['deriveBits']
+    );
+    const derivedBits = await crypto.subtle.deriveBits(
+        { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+        key,
+        256
+    );
+    return `${Buffer.from(salt).toString('base64')}.${Buffer.from(derivedBits).toString('base64')}`;
 }
 
 /**
@@ -54,18 +60,38 @@ export async function verifyPassword(password: string, storedHash: string): Prom
     const salt = Buffer.from(saltStr, 'base64');
     const storedKey = Buffer.from(hashStr, 'base64');
 
-    const derivedKey = await scryptAsync(password, salt, 64);
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const key = await crypto.subtle.importKey(
+        'raw',
+        data,
+        { name: 'PBKDF2' },
+        false,
+        ['deriveBits']
+    );
+    const derivedBits = await crypto.subtle.deriveBits(
+        { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+        key,
+        256
+    );
 
-    return timingSafeEqual(storedKey, derivedKey as Buffer);
+    if (derivedBits.byteLength !== storedKey.byteLength) {
+        return false;
+    }
+    const derivedView = new Uint8Array(derivedBits);
+    const storedView = new Uint8Array(storedKey);
+    let isEqual = true;
+    for (let i = 0; i < derivedView.length; i++) {
+        isEqual = isEqual && derivedView[i] === storedView[i];
+    }
+    return isEqual;
 }
 
 /**
  * Generate a JWT for a user
  */
 export async function generateToken(user: User): Promise<string> {
-    // Current time in seconds
     const now = Math.floor(Date.now() / 1000);
-
     const payload: JwtPayload = {
         sub: user.id,
         email: user.email,
@@ -74,7 +100,6 @@ export async function generateToken(user: User): Promise<string> {
         iat: now,
         exp: now + SESSION_DURATION
     };
-
     return jwt.sign(payload, JWT_SECRET);
 }
 
@@ -84,12 +109,7 @@ export async function generateToken(user: User): Promise<string> {
 export async function verifyToken(token: string): Promise<JwtPayload | null> {
     try {
         const result = await jwt.verify(token, JWT_SECRET);
-
-        if (!result) {
-            return null;
-        }
-
-        return result.payload as JwtPayload;
+        return result ? result.payload as JwtPayload : null;
     } catch (error) {
         console.error('Token verification error:', error);
         return null;
@@ -104,7 +124,6 @@ export async function getUserFromToken(token: string, env?: Env): Promise<User |
     if (!payload) return null;
 
     const db = getDb(env || 'defaultEnvValue' as unknown as Env);
-
     const user = await db.query.users.findFirst({
         where: eq(schema.users.id, payload.sub),
     });
@@ -126,7 +145,6 @@ export async function getUserFromToken(token: string, env?: Env): Promise<User |
  */
 export async function getUserById(id: string, env?: Env): Promise<User | null> {
     const db = getDb(env || 'defaultEnvValue' as unknown as Env);
-
     const user = await db.query.users.findFirst({
         where: eq(schema.users.id, id),
     });
@@ -176,5 +194,5 @@ export function createAuthError(redirectTo = '/admin/login'): NextResponse {
  * WebAuthn (FIDO2) functionality for passwordless 2FA
  */
 export const webauthn = {
-    // We'll implement this in a separate file if needed
+    // Implementation can be added here if needed
 };
