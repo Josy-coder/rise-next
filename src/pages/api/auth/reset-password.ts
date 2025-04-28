@@ -152,7 +152,7 @@ async function handleVerifyToken(req: NextApiRequest, res: NextApiResponse, db: 
             where: and(
                 eq(schema.verificationTokens.token, token),
                 eq(schema.verificationTokens.type, 'password_reset'),
-                gt(schema.verificationTokens.expires, new Date())
+                gt(schema.verificationTokens.expires, new Date().getTime())
             ),
         });
 
@@ -199,7 +199,7 @@ async function handleResetPassword(req: NextApiRequest, res: NextApiResponse, db
             where: and(
                 eq(schema.verificationTokens.token, token),
                 eq(schema.verificationTokens.type, 'password_reset'),
-                gt(schema.verificationTokens.expires, new Date())
+                gt(schema.verificationTokens.expires, new Date().getTime())
             ),
         });
 
