@@ -1,3 +1,5 @@
+export const runtime = "experimental-edge";
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getCloudflareEnv, getDbClient } from '@/lib/cloudflare';
 import { hashPassword } from '@/lib/auth';

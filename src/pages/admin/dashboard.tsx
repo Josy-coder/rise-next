@@ -1,3 +1,5 @@
+export const runtime = "experimental-edge";
+
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
