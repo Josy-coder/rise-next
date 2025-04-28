@@ -11,7 +11,7 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
-    "deploy": "wrangler pages deploy .vercel/output/static --project-name=rise-next",
+    "deploy": "wrangler deploy --project-name=rise-next",
     "deploy:dev": "wrangler pages dev .vercel/output/static --compatibility-date=2023-10-30",
     "setup": "curl -X POST http://localhost:3000/api/setup -H 'Content-Type: application/json' -d '{\"email\": \"admin@example.com\", \"password\": \"password\", \"name\": \"Admin User\"}'"
   },

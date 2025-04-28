@@ -37,16 +37,17 @@ export const webAuthnCredentials = sqliteTable("webauthn_credentials", {
 });
 
 // Verification tokens (for email verification, password reset)
-export const verificationTokens = sqliteTable("verification_tokens", {
-    token: text("token").notNull().primaryKey(),
-    identifier: text("identifier").notNull(), // Usually an email address
-    expires: integer("expires", { mode: "timestamp" }).notNull(),
-    type: text("type", { enum: ["email_verification", "password_reset", "application_auth"] }).notNull(),
+export const verificationTokens = sqliteTable('verification_tokens', {
+    token: text('token').notNull(),
+    identifier: text('identifier').notNull(),
+    expires: integer('expires').notNull(),
+    type: text('type').notNull(),
 }, (table) => {
     return {
-        identifierTypeIdx: primaryKey({ columns: [table.identifier, table.type] }),
+        pk: primaryKey(table.token),
     };
 });
+
 
 // Blog Posts
 export const posts = sqliteTable("posts", {
