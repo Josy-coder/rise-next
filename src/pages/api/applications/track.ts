@@ -109,7 +109,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             ),
         });
 
-
         if (!verificationToken) {
             return res.status(401).json({ error: 'Invalid or expired token' });
         }
