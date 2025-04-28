@@ -1,5 +1,3 @@
-export const runtime = 'experimental-edge';
-
 import {eq} from "drizzle-orm";
 
 import { NextRequest, NextResponse } from 'next/server';

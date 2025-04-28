@@ -1,5 +1,3 @@
-export const runtime = 'experimental-edge';
-
 import { NextResponse, NextRequest } from 'next/server';
 import { verifyToken } from '@/lib/auth';
 

@@ -1,5 +1,3 @@
-export const runtime = "experimental-edge";
-
 import { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';

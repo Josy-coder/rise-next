@@ -1,5 +1,3 @@
-export const runtime = 'experimental-edge';
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getCloudflareEnv, getDbClient } from '@/lib/cloudflare';
 import { hasRole } from '@/lib/auth';

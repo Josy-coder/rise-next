@@ -1,5 +1,3 @@
-export const runtime = 'experimental-edge';
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getCloudflareEnv, getDbClient, getKvClient } from '@/lib/cloudflare';
 import { eq } from 'drizzle-orm';

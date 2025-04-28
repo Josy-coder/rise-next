@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "cloudflare:build": "cross-env NEXT_PUBLIC_ENV=production next build && npx @cloudflare/next-on-pages",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "build:worker": "opennextjs-cloudflare build",
+    "cloudflare:build": "cross-env NEXT_PUBLIC_ENV=production next build && npx @opennextjs/cloudflare",
     "start": "next start",
     "lint": "next lint",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
+    "deploy:worker": "npm run build:worker && wrangler deploy",
     "deploy": "wrangler deploy --project-name=rise-next",
     "deploy:dev": "wrangler pages dev .vercel/output/static --compatibility-date=2023-10-30",
     "setup": "curl -X POST http://localhost:3000/api/setup -H 'Content-Type: application/json' -d '{\"email\": \"admin@example.com\", \"password\": \"password\", \"name\": \"Admin User\"}'"
@@ -57,8 +60,8 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.12",
     "@eslint/eslintrc": "^3",
+    "@opennextjs/cloudflare": "^1.0.0-beta.3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^18.3.11",
