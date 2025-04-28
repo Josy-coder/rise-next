@@ -1,40 +1,107 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { getToken } from 'next-auth/jwt';
+export const runtime = 'experimental-edge';
+
+import { NextResponse, NextRequest } from 'next/server';
+import { verifyToken } from '@/lib/auth';
+
+// Define public routes that don't require authentication
+const publicPaths = [
+    '/',
+    '/about',
+    '/contact',
+    '/donate',
+    '/programs',
+    '/opportunities',
+    '/blog',
+    '/apply',
+    '/track',
+    '/api/public/',
+    '/admin/login',
+    '/admin/register',
+    '/admin/forgot-password',
+    '/admin/reset-password'
+];
+
+// Define routes that require admin access
+const adminPaths = [
+    '/admin/dashboard',
+    '/admin/posts',
+    '/admin/programs',
+    '/admin/opportunities',
+    '/admin/applications',
+    '/admin/forms',
+    '/admin/applicants',
+    '/admin/media',
+    '/admin/users'
+];
+
+// Define routes that require editor access
+const editorPaths = [
+    '/admin/editor'
+];
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // Check if the request is for the admin dashboard
-    if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-        const token = await getToken({
-            req: request,
-            secret: process.env.NEXTAUTH_SECRET,
-        });
+    // Check if the path is public
+    if (publicPaths.some(path => pathname === path || pathname.startsWith(`${path}/`))) {
+        return NextResponse.next();
+    }
 
-        // If the user is not authenticated or doesn't have a valid role, redirect to login
+    // For API routes, apply JWT auth check
+    if (pathname.startsWith('/api/')) {
+        // Public API endpoints don't need auth
+        if (pathname.startsWith('/api/public/')) {
+            return NextResponse.next();
+        }
+
+        // Get token from query parameter
+        const url = new URL(request.url);
+        const token = url.searchParams.get('token');
+
         if (!token) {
-            const url = new URL('/admin/login', request.url);
-            url.searchParams.set('callbackUrl', encodeURI(pathname));
-            return NextResponse.redirect(url);
+            return new NextResponse(JSON.stringify({ error: 'No authentication token provided' }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        // If user doesn't have admin role, redirect to unauthorized page
-        if (token.role !== 'admin' && token.role !== 'editor' && token.role !== 'viewer') {
-            return NextResponse.redirect(new URL('/admin/unauthorized', request.url));
+        const payload = await verifyToken(token);
+
+        if (!payload) {
+            return new NextResponse(JSON.stringify({ error: 'Invalid or expired token' }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
+
+        // Admin API endpoints need admin role
+        if (pathname.startsWith('/api/admin/')) {
+            if (payload.role !== 'admin') {
+                return new NextResponse(JSON.stringify({ error: 'Admin role required' }), {
+                    status: 403,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+        }
+
+        return NextResponse.next();
     }
 
-    // For the application tracking page
-    if (pathname.startsWith('/track') && pathname !== '/track') {
-        // Allow access to the tracking page with a valid application ID
-        // This is handled in the page itself with OTP verification
+    // For admin and editor routes, we'll redirect to login
+    // The actual auth check will happen client-side in the components
+    if (adminPaths.some(path => pathname === path || pathname.startsWith(`${path}/`)) ||
+        editorPaths.some(path => pathname === path || pathname.startsWith(`${path}/`))) {
+        // Just redirecting to login if not authenticated will be handled client-side
+        return NextResponse.next();
     }
 
+    // Default behavior: allow access
     return NextResponse.next();
 }
 
-// Only run middleware on matching paths
 export const config = {
-    matcher: ['/admin/:path*', '/track/:path*'],
+    matcher: [
+        // Match all paths except _next, static files, and api routes handled separately
+        '/((?!_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.svg$).*)',
+    ],
 };

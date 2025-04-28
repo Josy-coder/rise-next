@@ -6,11 +6,46 @@ export const users = sqliteTable("users", {
     id: text("id").primaryKey(),
     name: text("name"),
     email: text("email").notNull().unique(),
+    password: text("password").notNull(), // scrypt hashed password
+    role: text("role", { enum: ["admin", "editor", "viewer"] }).default("viewer"),
     emailVerified: integer("email_verified", { mode: "timestamp" }),
     image: text("image"),
-    role: text("role", { enum: ["admin", "editor", "viewer"] }).default("viewer"),
     createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`CURRENT_TIMESTAMP`),
     updatedAt: integer("updated_at", { mode: "timestamp" }).notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+// Sessions for authentication
+export const sessions = sqliteTable("sessions", {
+    id: text("id").primaryKey(),
+    userId: text("user_id").references(() => users.id).notNull(),
+    expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+    createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+// WebAuthn credentials for passwordless authentication and 2FA
+export const webAuthnCredentials = sqliteTable("webauthn_credentials", {
+    id: text("id").primaryKey(),
+    userId: text("user_id").references(() => users.id).notNull(),
+    publicKey: text("public_key").notNull(),
+    // Store the credential ID from the authenticator
+    credentialId: text("credential_id").notNull().unique(),
+    // Counter to prevent replay attacks
+    counter: integer("counter").notNull(),
+    // Transports that the authenticator supports
+    transports: text("transports"),
+    createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+// Verification tokens (for email verification, password reset)
+export const verificationTokens = sqliteTable("verification_tokens", {
+    token: text("token").notNull().primaryKey(),
+    identifier: text("identifier").notNull(), // Usually an email address
+    expires: integer("expires", { mode: "timestamp" }).notNull(),
+    type: text("type", { enum: ["email_verification", "password_reset", "application_auth"] }).notNull(),
+}, (table) => {
+    return {
+        identifierTypeIdx: primaryKey({ columns: [table.identifier, table.type] }),
+    };
 });
 
 // Blog Posts
@@ -178,14 +213,6 @@ export const media = sqliteTable("media", {
     createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`CURRENT_TIMESTAMP`),
 });
 
-// Sessions for NextAuth
-export const sessions = sqliteTable("sessions", {
-    id: text("id").primaryKey(),
-    userId: text("user_id").references(() => users.id).notNull(),
-    expires: integer("expires", { mode: "timestamp" }).notNull(),
-    sessionToken: text("session_token").notNull().unique(),
-});
-
 // Account for OAuth providers
 export const accounts = sqliteTable("accounts", {
     id: text("id").primaryKey(),
@@ -207,15 +234,4 @@ export const settings = sqliteTable("settings", {
     key: text("key").primaryKey(),
     value: text("value").notNull(),
     updatedAt: integer("updated_at", { mode: "timestamp" }).notNull().default(sql`CURRENT_TIMESTAMP`),
-});
-
-// Verification tokens (for email verification and password reset)
-export const verificationTokens = sqliteTable("verification_tokens", {
-    identifier: text("identifier").notNull(),
-    token: text("token").notNull(),
-    expires: integer("expires", { mode: "timestamp" }).notNull(),
-}, (table) => {
-    return {
-        pk: primaryKey({ columns: [table.identifier, table.token] }),
-    };
 });

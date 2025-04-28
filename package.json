@@ -34,6 +34,7 @@
     "@radix-ui/react-slot": "^1.2.0",
     "@radix-ui/react-tabs": "^1.1.9",
     "@tanstack/react-table": "^8.21.3",
+    "@tsndr/cloudflare-worker-jwt": "^3.1.4",
     "@uploadthing/react": "^7.3.0",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
@@ -48,10 +49,12 @@
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.56.1",
+    "resend": "^4.4.1",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.2.0",
     "wrangler": "^4.13.1",
-    "zod": "^3.24.3"
+    "zod": "^3.24.3",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.12",

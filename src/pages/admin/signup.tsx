@@ -10,40 +10,60 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { loginUser } from '@/lib/stores/auth-store';
 
-type LoginFormData = {
+type RegisterFormData = {
+    name: string;
     email: string;
     password: string;
+    confirmPassword: string;
+    inviteCode: string;
 };
 
-export default function AdminLogin() {
+export default function AdminRegister() {
     const router = useRouter();
-    const { redirect_url } = router.query;
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterFormData>();
+    const password = watch('password');
 
-    async function onSubmit(data: LoginFormData) {
+    async function onSubmit(data: RegisterFormData) {
+        if (data.password !== data.confirmPassword) {
+            toast.error('Passwords do not match');
+            return;
+        }
+
         setIsLoading(true);
 
         try {
-            const result = await loginUser(data.email, data.password);
+            const response = await fetch('/api/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'register',
+                    name: data.name,
+                    email: data.email,
+                    password: data.password,
+                    inviteCode: data.inviteCode,
+                }),
+            });
 
-            if (!result.success) {
-                throw new Error(result.error || 'Failed to login');
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Failed to register');
             }
 
-            toast.success('Login successful');
+            toast.success('Registration successful');
 
-            // Redirect to dashboard or the specified redirect URL
-            const redirectTo = typeof redirect_url === 'string' ? redirect_url : '/admin/dashboard';
-            router.push(redirectTo);
+            // Redirect to dashboard
+            router.push('/admin/dashboard');
 
         } catch (error) {
-            console.error('Login error:', error);
-            toast.error(error instanceof Error ? error.message : 'Login failed. Please try again.');
+            console.error('Registration error:', error);
+            toast.error(error instanceof Error ? error.message : 'Registration failed. Please try again.');
             setIsLoading(false);
         }
     }
@@ -51,24 +71,39 @@ export default function AdminLogin() {
     return (
         <>
             <Head>
-                <title>Admin Login | RiseNext</title>
+                <title>Admin Registration | RiseNext</title>
             </Head>
             <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
                 <div className="w-full max-w-md">
                     <div className="text-center mb-8">
                         <h1 className="text-2xl font-bold">RiseNext Admin</h1>
-                        <p className="text-gray-600 mt-2">Sign in to access the admin dashboard</p>
+                        <p className="text-gray-600 mt-2">Create your admin account</p>
                     </div>
 
                     <Card>
                         <CardHeader>
-                            <CardTitle>Admin Login</CardTitle>
+                            <CardTitle>Create Admin Account</CardTitle>
                             <CardDescription>
-                                Enter your credentials to access the admin dashboard
+                                Sign up with your details to access the admin dashboard
                             </CardDescription>
                         </CardHeader>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <CardContent className="space-y-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="name">Full Name</Label>
+                                    <Input
+                                        id="name"
+                                        placeholder="John Doe"
+                                        disabled={isLoading}
+                                        {...register('name', {
+                                            required: 'Name is required',
+                                        })}
+                                    />
+                                    {errors.name && (
+                                        <p className="text-sm text-red-500">{errors.name.message}</p>
+                                    )}
+                                </div>
+
                                 <div className="space-y-2">
                                     <Label htmlFor="email">Email</Label>
                                     <Input
@@ -97,10 +132,18 @@ export default function AdminLogin() {
                                             id="password"
                                             type={showPassword ? 'text' : 'password'}
                                             placeholder="••••••••"
-                                            autoComplete="current-password"
+                                            autoComplete="new-password"
                                             disabled={isLoading}
                                             {...register('password', {
                                                 required: 'Password is required',
+                                                minLength: {
+                                                    value: 8,
+                                                    message: 'Password must be at least 8 characters',
+                                                },
+                                                pattern: {
+                                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                                    message: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+                                                },
                                             })}
                                         />
                                         <button
@@ -121,27 +164,40 @@ export default function AdminLogin() {
                                     )}
                                 </div>
 
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                        <input
-                                            id="remember-me"
-                                            name="remember-me"
-                                            type="checkbox"
-                                            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                                        />
-                                        <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                                            Remember me
-                                        </label>
-                                    </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                                    <Input
+                                        id="confirmPassword"
+                                        type={showPassword ? 'text' : 'password'}
+                                        placeholder="••••••••"
+                                        disabled={isLoading}
+                                        {...register('confirmPassword', {
+                                            required: 'Please confirm your password',
+                                            validate: value => value === password || 'Passwords do not match',
+                                        })}
+                                    />
+                                    {errors.confirmPassword && (
+                                        <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
+                                    )}
+                                </div>
 
-                                    <div className="text-sm">
-                                        <Link
-                                            href="/admin/forgot-password"
-                                            className="font-medium text-primary hover:text-primary/80"
-                                        >
-                                            Forgot your password?
-                                        </Link>
-                                    </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="inviteCode">Invite Code</Label>
+                                    <Input
+                                        id="inviteCode"
+                                        placeholder="Enter your invite code"
+                                        disabled={isLoading}
+                                        {...register('inviteCode', {
+                                            required: 'Invite code is required',
+                                        })}
+                                    />
+                                    {errors.inviteCode && (
+                                        <p className="text-sm text-red-500">{errors.inviteCode.message}</p>
+                                    )}
+                                    <p className="text-xs text-gray-500">
+                                        An invite code is required to create an admin account.
+                                        Contact the system administrator to get one.
+                                    </p>
                                 </div>
                             </CardContent>
 
@@ -154,20 +210,20 @@ export default function AdminLogin() {
                                     {isLoading ? (
                                         <>
                                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                            Signing in...
+                                            Creating account...
                                         </>
                                     ) : (
-                                        'Sign In'
+                                        'Create Account'
                                     )}
                                 </Button>
 
                                 <div className="text-center text-sm text-gray-500">
-                                    <span>Don&#39;t have an account?{' '}</span>
+                                    <span>Already have an account?{' '}</span>
                                     <Link
-                                        href="/admin/signup"
+                                        href="/admin/login"
                                         className="font-medium text-blue-600 hover:text-blue-500"
                                     >
-                                        Sign up
+                                        Sign in
                                     </Link>
                                 </div>
                             </CardFooter>

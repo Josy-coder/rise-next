@@ -1,7 +1,4 @@
-export const runtime = "experimental-edge";
-
 import { GetServerSideProps } from 'next';
-import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import {
@@ -18,6 +15,7 @@ import AdminLayout from '@/components/layout/admin-layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
+import {UserRole, verifyToken} from '@/lib/auth';
 
 interface DashboardStat {
     title: string;
@@ -50,11 +48,13 @@ interface DashboardProps {
             }[];
         };
     };
+    userEmail: string;
+    userRole: UserRole;
 }
 
 // This is placeholder data for development
 // In production, this would be fetched from the database
-const placeholderStats: DashboardProps['stats'] = {
+const placeholderStats = {
     posts: {
         title: 'Blog Posts',
         value: 12,
@@ -147,7 +147,7 @@ const placeholderStats: DashboardProps['stats'] = {
     }
 };
 
-export default function Dashboard({ stats }: DashboardProps) {
+export default function Dashboard({ stats, userEmail, userRole }: DashboardProps) {
     // Status icon mapping
     const statusIcons = {
         new: <Clock className="h-5 w-5 text-blue-500" />,
@@ -163,7 +163,10 @@ export default function Dashboard({ stats }: DashboardProps) {
                 <title>Admin Dashboard | RiseNext</title>
             </Head>
             <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+                <div>
+                    <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+                    <p className="text-sm text-gray-500">Logged in as: {userEmail} | Role: {userRole}</p>
+                </div>
                 <div className="flex items-center space-x-4">
                     <Button asChild>
                         <Link href="/admin/posts/new">
@@ -278,10 +281,43 @@ export default function Dashboard({ stats }: DashboardProps) {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getSession(context);
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    try {
+        // Get the token from the cookie or authorization header
+        const token = ctx.req.cookies['rise-next-auth']
+            ? JSON.parse(ctx.req.cookies['rise-next-auth']).state.token
+            : null;
 
-    if (!session) {
+        if (!token) {
+            return {
+                redirect: {
+                    destination: '/admin/login',
+                    permanent: false,
+                },
+            };
+        }
+
+        // Verify the token and check role
+        const payload = await verifyToken(token);
+        if (!payload || payload.role !== 'admin') {
+            return {
+                redirect: {
+                    destination: '/admin/unauthorized',
+                    permanent: false,
+                },
+            };
+        }
+
+        // For now, we'll use the placeholder data
+        return {
+            props: {
+                stats: placeholderStats,
+                userEmail: payload.email,
+                userRole: payload.role
+            }
+        };
+    } catch (error) {
+        console.error('Error fetching dashboard data:', error);
         return {
             redirect: {
                 destination: '/admin/login',
@@ -289,12 +325,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             },
         };
     }
-
-    // In production, we would fetch real data from the database here
-    // For now, we'll use the placeholder data
-    return {
-        props: {
-            stats: placeholderStats,
-        },
-    };
 };

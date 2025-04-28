@@ -1,70 +1,86 @@
 export const runtime = 'experimental-edge';
 
-import { NextApiRequest, NextApiResponse } from 'next';
-import { up } from '@auth/d1-adapter';
-import bcrypt from 'bcryptjs';
+import {eq} from "drizzle-orm";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+import { NextRequest, NextResponse } from 'next/server';
+import { hashPassword } from '@/lib/auth';
+import { getDb } from '@/db';
+import * as schema from '@/db/schema';
+import { nanoid } from 'nanoid';
+
+export default async function handler(req: NextRequest) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return new NextResponse(JSON.stringify({ error: 'Method not allowed' }), {
+            status: 405,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     // Get the Cloudflare environment
     const env = (req as any).cloudflare;
 
     if (!env || !env.DB) {
-        return res.status(500).json({ error: 'Cloudflare environment not available' });
+        return new NextResponse(JSON.stringify({ error: 'Cloudflare environment not available' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     try {
-        // Run D1 adapter migrations
-        await up(env.DB);
+        // Get DB client
+        const db = getDb(env);
 
-        // Check if an admin user is needed
-        const { email, password, name } = req.body;
+        // Parse request body
+        const { email, password, name } = await req.json();
 
         if (email && password) {
             // Check if user already exists
-            const existingUser = await env.DB
-                .prepare('SELECT * FROM users WHERE email = ?')
-                .bind(email)
-                .first();
+            const existingUser = await db.query.users.findFirst({
+                where: eq(schema.users.email, email.toLowerCase()),
+            });
 
             if (!existingUser) {
                 // Hash password
-                const hashedPassword = await bcrypt.hash(password, 10);
+                const hashedPassword = await hashPassword(password);
 
                 // Create admin user
-                await env.DB
-                    .prepare(
-                        'INSERT INTO users (id, name, email, password, role, email_verified) VALUES (?, ?, ?, ?, ?, ?)'
-                    )
-                    .bind(
-                        `user_${Date.now()}`,
-                        name || 'Admin User',
-                        email,
-                        hashedPassword,
-                        'admin',
-                        new Date().toISOString()
-                    )
-                    .run();
+                const userId = nanoid();
+                await db.insert(schema.users).values({
+                    id: userId,
+                    name: name || 'Admin User',
+                    email: email.toLowerCase(),
+                    password: hashedPassword,
+                    role: 'admin',
+                    emailVerified: new Date(),
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                });
 
-                return res.status(200).json({
+                return new NextResponse(JSON.stringify({
                     success: true,
-                    message: 'Database migrated and admin user created successfully'
+                    message: 'Admin user created successfully'
+                }), {
+                    status: 200,
+                    headers: { 'Content-Type': 'application/json' }
                 });
             }
         }
 
-        return res.status(200).json({
+        return new NextResponse(JSON.stringify({
             success: true,
-            message: 'Database migrated successfully'
+            message: 'Database setup completed'
+        }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
         });
     } catch (error) {
-        console.error('Migration error:', error);
-        return res.status(500).json({
-            error: 'Failed to run migrations',
+        console.error('Setup error:', error);
+        return new NextResponse(JSON.stringify({
+            error: 'Failed to set up database',
             details: error instanceof Error ? error.message : String(error)
+        }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
         });
     }
 }

@@ -1,7 +1,6 @@
-import { ReactNode, useState } from "react";
-import { useSession, signOut } from "next-auth/react";
-import Link from "next/link";
+import { ReactNode, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import {
     LayoutDashboard,
     FileText,
@@ -13,27 +12,44 @@ import {
     LogOut,
     Menu,
     X,
-    ChevronDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAuthStore, logoutUser, fetchCurrentUser } from "@/lib/stores/auth-store";
 
 interface AdminLayoutProps {
     children: ReactNode;
 }
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
-    const { data: session } = useSession({ required: true });
     const router = useRouter();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    // Get auth state from zustand store
+    const { user, isAuthenticated, isLoading, token } = useAuthStore();
+
+    // Check authentication on component mount
+    useEffect(() => {
+        async function checkAuth() {
+            // If we don't have a token, redirect to login
+            if (!token) {
+                router.push(`/admin/login?redirect_url=${encodeURIComponent(router.asPath)}`);
+                return;
+            }
+
+            // If we have a token but no user data, fetch it
+            if (token && !user) {
+                const result = await fetchCurrentUser();
+
+                // If fetch fails, redirect to login
+                if (!result.success) {
+                    router.push(`/admin/login?redirect_url=${encodeURIComponent(router.asPath)}`);
+                }
+            }
+        }
+
+        checkAuth();
+    }, [token, user, router]);
 
     const navigation = [
         { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -47,9 +63,18 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     ];
 
     const handleSignOut = async () => {
-        await signOut({ redirect: false });
-        router.push("/admin/login");
+        await logoutUser();
+        router.push('/admin/login');
     };
+
+    // Show loading state
+    if (isLoading || !isAuthenticated || !user) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-100">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -143,39 +168,27 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                         </nav>
                     </div>
                     <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-                        <div className="flex items-center">
-                            <div>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" className="flex items-center space-x-2">
-                                            <Avatar className="h-8 w-8">
-                                                <AvatarImage src={session?.user?.image || ""} alt={session?.user?.name || "User"} />
-                                                <AvatarFallback>{session?.user?.name?.charAt(0) || "U"}</AvatarFallback>
-                                            </Avatar>
-                                            <div className="flex flex-col items-start">
-                                                <span className="text-sm font-medium text-gray-700">{session?.user?.name || "User"}</span>
-                                                <span className="text-xs text-gray-500">{session?.user?.email}</span>
-                                            </div>
-                                            <ChevronDown className="h-4 w-4 text-gray-500" />
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem asChild>
-                                            <Link href="/admin/profile">Profile</Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem asChild>
-                                            <Link href="/admin/settings">Settings</Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem onClick={handleSignOut}>
-                                            <LogOut className="mr-2 h-4 w-4" />
-                                            <span>Sign out</span>
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
+                        <div className="flex items-center w-full">
+                            <div className="flex-shrink-0">
+                                <Avatar>
+                                    <AvatarFallback>
+                                        {user?.name?.charAt(0) || user?.email.charAt(0).toUpperCase()}
+                                    </AvatarFallback>
+                                </Avatar>
                             </div>
+                            <div className="ml-3 flex-grow">
+                                <p className="text-sm font-medium text-gray-700">{user?.name || 'Admin User'}</p>
+                                <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                            </div>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={handleSignOut}
+                                className="ml-1"
+                                title="Sign out"
+                            >
+                                <LogOut className="h-5 w-5 text-gray-400" />
+                            </Button>
                         </div>
                     </div>
                 </div>
