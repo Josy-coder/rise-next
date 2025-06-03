@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "@cloudflare/d1": "^1.4.1",
+    "@hono/swagger-ui": "^0.5.1",
+    "@hono/zod-openapi": "^0.19.8",
+    "@hono/zod-validator": "^0.7.0",
+    "drizzle-kit": "^0.31.1",
+    "drizzle-orm": "^0.44.0",
+    "hono": "^4.7.10",
+    "resend": "^4.5.1",
+    "zod": "^3.25.42",
+    "zod-openapi": "^4.2.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250529.0",
+    "wrangler": "^4.4.0"
+  }
+}
