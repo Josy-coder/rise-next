@@ -29,3 +29,5 @@
 *.local
 
 CLAUDE.md
+/.claude
+CONTEXT.md
