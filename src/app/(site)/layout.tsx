@@ -1,16 +1,16 @@
-'use client'
-
-import {useUTMTracking} from '@/hooks/useUTMTracking'
+import NavbarWrapper from '@/components/layout/NavbarWrapper'
+import FooterWrapper from '@/components/layout/FooterWrapper'
+import UTMTracker from '@/components/UTMTracker'
 
 export default function SiteLayout({children}: {children: React.ReactNode}) {
-  // Track UTM parameters
-  useUTMTracking()
-
   return (
-    <div className="min-h-screen">
-      {/* Header/Navigation will go here */}
-      <main>{children}</main>
-      {/* Footer will go here */}
-    </div>
+    <>
+      <UTMTracker />
+      <div className="min-h-screen flex flex-col">
+        <NavbarWrapper />
+        <main className="flex-grow">{children}</main>
+        <FooterWrapper />
+      </div>
+    </>
   )
 }
