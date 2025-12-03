@@ -23,7 +23,7 @@ export default function Navbar() {
             <div className="row">
               <div className="col-lg-4">
                 <div className="d-flex justify-content-end">
-                  <div className="flex-shrink-0 btn-square bg-primary">
+                  <div className="flex-shrink-0 btn-square bg-primary rounded">
                     <i className="fa fa-phone-alt text-dark"></i>
                   </div>
                   <div className="ms-2">
@@ -34,7 +34,7 @@ export default function Navbar() {
               </div>
               <div className="col-lg-4">
                 <div className="d-flex justify-content-end">
-                  <div className="flex-shrink-0 btn-square bg-primary">
+                  <div className="flex-shrink-0 btn-square rounded bg-primary">
                     <i className="fa fa-envelope-open text-dark"></i>
                   </div>
                   <div className="ms-2">
@@ -43,9 +43,9 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4">
+              <div className="col-lg-4 ">
                 <div className="d-flex justify-content-end">
-                  <div className="flex-shrink-0 btn-square bg-primary">
+                  <div className="flex-shrink-0 btn-square bg-primary rounded">
                     <i className="fa fa-map-marker-alt text-dark"></i>
                   </div>
                   <div className="ms-2">
@@ -62,16 +62,16 @@ export default function Navbar() {
 
       {/* Navbar Start */}
       <div className="container-fluid bg-secondary px-0 wow fadeIn" data-wow-delay="0.1s">
-        <div className="nav-bar">
-          <nav className="navbar navbar-expand-lg bg-primary navbar-dark px-4 py-lg-0">
-            <h4 className="d-lg-none m-0">Menu</h4>
+        <div className="nav-bar bg-secondary ">
+          <nav className="navbar navbar-expand-lg bg-primary rounded-top navbar-dark px-4 py-lg-0">
+            <h4 className="d-lg-none m-0">RiseNext</h4>
             <button
               type="button"
-              className="navbar-toggler me-0"
+              className="navbar-toggler bg-secondary rounded me-0"
               data-bs-toggle="collapse"
               data-bs-target="#navbarCollapse"
             >
-              <span className="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon text-primary"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
               <div className="navbar-nav me-auto">
@@ -108,7 +108,7 @@ export default function Navbar() {
                 </a>
               </div>
               <div className="d-none d-lg-flex ms-auto">
-                <a href="/donate" className="btn btn-secondary px-4 py-2">
+                <a href="/donate" className="btn btn-secondary rounded px-4 py-2">
                   Donate
                 </a>
               </div>

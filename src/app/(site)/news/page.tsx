@@ -73,13 +73,13 @@ const placeholderNews = [
 export default function NewsPage() {
   return (
     <>
-
-
       {/* News Start */}
       <div className="container-fluid py-5">
         <div className="container">
           <div className="text-center mx-auto mb-5 wow fadeIn" data-wow-delay="0.1s">
-            <p className="section-title bg-white text-center text-primary px-3 fw-bold">Latest Updates</p>
+            <p className="section-title bg-white text-center text-primary px-3 fw-bold">
+              Latest Updates
+            </p>
             <h1 className="display-6 mb-4">News & Updates</h1>
             <p className="mb-0">
               Stay connected with RiseNext. Read about our impact, success stories, upcoming events,
@@ -139,9 +139,17 @@ export default function NewsPage() {
                 className="col-lg-4 col-md-6 wow fadeIn"
                 data-wow-delay={`${0.1 + index * 0.1}s`}
               >
-                <div className="blog-item bg-light rounded overflow-hidden h-100">
-                  <div className="blog-img position-relative overflow-hidden">
-                    <img className="img-fluid w-100" src={article.featuredImage} alt="" />
+                <div className="blog-item bg-light rounded overflow-hidden h-100 d-flex flex-column">
+                  <div
+                    className="blog-img position-relative overflow-hidden"
+                    style={{height: '200px'}}
+                  >
+                    <img
+                      className="img-fluid w-100 h-100"
+                      src={article.featuredImage}
+                      alt=""
+                      style={{objectFit: 'cover'}}
+                    />
                     <a
                       className="position-absolute top-0 start-0 bg-primary text-dark rounded-end mt-3 py-2 px-4"
                       href="#"
@@ -149,7 +157,7 @@ export default function NewsPage() {
                       {article.category}
                     </a>
                   </div>
-                  <div className="p-4">
+                  <div className="p-4 d-flex flex-column flex-grow-1">
                     <div className="d-flex mb-3">
                       <small className="me-3">
                         <i className="fa fa-user text-secondary me-2"></i>
@@ -160,12 +168,38 @@ export default function NewsPage() {
                         {new Date(article.publishedAt).toLocaleDateString()}
                       </small>
                     </div>
-                    <h5 className="mb-3">{article.title}</h5>
-                    <p>{article.excerpt}</p>
-                    <a className="btn btn-secondary py-2 px-4" href={`/news/${article.slug}`}>
-                      Read More
-                      <i className="fa fa-arrow-right ms-2"></i>
-                    </a>
+                    <h5
+                      className="mb-3"
+                      style={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        minHeight: '3.6rem',
+                      }}
+                    >
+                      {article.title}
+                    </h5>
+                    <p
+                      className="mb-3"
+                      style={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        minHeight: '4.5rem',
+                      }}
+                    >
+                      {article.excerpt}
+                    </p>
+                    <div className="mt-auto">
+                      <a className="btn btn-secondary rounded py-2 px-4" href={`/news/${article.slug}`}>
+                        Read More
+                        <i className="fa fa-arrow-right ms-2"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

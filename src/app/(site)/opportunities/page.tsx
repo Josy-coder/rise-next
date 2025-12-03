@@ -83,7 +83,9 @@ export default function OpportunitiesPage() {
       <div className="container-fluid py-5">
         <div className="container">
           <div className="text-center mx-auto mb-5 wow fadeIn" data-wow-delay="0.1s">
-            <p className="section-title bg-white text-center text-primary px-3 fw-bold">Get Involved</p>
+            <p className="section-title bg-white text-center text-primary px-3 fw-bold">
+              Get Involved
+            </p>
             <h1 className="display-6 mb-4">Current Opportunities</h1>
             <p className="mb-0">
               Whether you're looking to make a difference as a volunteer, seeking a career with
@@ -144,9 +146,9 @@ export default function OpportunitiesPage() {
                 className="col-lg-4 col-md-6 wow fadeIn"
                 data-wow-delay={`${0.1 + index * 0.1}s`}
               >
-                <div className="service-item bg-light h-100 p-4">
+                <div className="service-item bg-light rounded h-100 p-4 d-flex flex-column">
                   <div className="d-flex align-items-center justify-content-between mb-3">
-                    <div className="d-inline-flex align-items-center justify-content-center mb-0">
+                    <div className="d-inline-flex align-items-center justify-content-center rounded-circle mb-0">
                       <i
                         className={`fa ${
                           opportunity.type === 'Career'
@@ -157,33 +159,59 @@ export default function OpportunitiesPage() {
                         } fa-2x text-secondary p-3`}
                       ></i>
                     </div>
-                    <span className="badge bg-primary text-dark  text-uppercase">{opportunity.type}</span>
+                    <span className="badge bg-primary text-dark rounded text-uppercase">{opportunity.type}</span>
                   </div>
-                  <h5 className="mb-3">{opportunity.title}</h5>
-                  <p className="mb-3">{opportunity.excerpt}</p>
+                  <h5
+                    className="mb-3"
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      minHeight: '3.6rem',
+                    }}
+                  >
+                    {opportunity.title}
+                  </h5>
+                  <p
+                    className="mb-3"
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                      minHeight: '4.5rem',
+                    }}
+                  >
+                    {opportunity.excerpt}
+                  </p>
                   <div className="mb-3">
-                    <small className="text-body">
-                      <i className="fa fa-map-marker-alt text-primary me-2"></i>
+                    <small className="text-body fw-bold">
+                      <i className="fa fa-map-marker-alt text-secondary me-2"></i>
                       {opportunity.location}
                     </small>
                     <br />
-                    <small className="text-body">
-                      <i className="fa fa-clock text-primary me-2"></i>
+                    <small className="text-body fw-bold">
+                      <i className="fa fa-clock text-secondary me-2"></i>
                       {opportunity.employmentType}
                     </small>
                     <br />
-                    <small className="text-body">
-                      <i className="fa fa-calendar text-primary me-2"></i>
+                    <small className="text-body fw-bold">
+                      <i className="fa fa-calendar text-secondary me-2"></i>
                       Deadline: {new Date(opportunity.deadline).toLocaleDateString()}
                     </small>
                   </div>
-                  <a
-                    className="btn btn-secondary py-2 px-4"
-                    href={`/opportunities/${opportunity.slug}`}
-                  >
-                    View Details
-                    <i className="fa fa-arrow-right ms-2"></i>
-                  </a>
+                  <div className="mt-auto">
+                    <a
+                      className="btn btn-secondary rounded py-2 px-4"
+                      href={`/opportunities/${opportunity.slug}`}
+                    >
+                      View Details
+                      <i className="fa fa-arrow-right ms-2"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}

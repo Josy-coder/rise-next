@@ -21,7 +21,7 @@ export default function ContactPage() {
               </h1>
             
               <div className="d-flex mb-3">
-                <div className="flex-shrink-0 btn-lg-square bg-primary">
+                <div className="flex-shrink-0 btn-lg-square rounded bg-primary">
                   <i className="fa fa-map-marker-alt text-dark"></i>
                 </div>
                 <div className="ms-3">
@@ -34,7 +34,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="d-flex mb-3">
-                <div className="flex-shrink-0 btn-lg-square bg-primary">
+                <div className="flex-shrink-0 btn-lg-square rounded bg-primary">
                   <i className="fa fa-phone-alt text-dark"></i>
                 </div>
                 <div className="ms-3">
@@ -43,7 +43,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="d-flex mb-3">
-                <div className="flex-shrink-0 btn-lg-square bg-primary">
+                <div className="flex-shrink-0 btn-lg-square rounded bg-primary">
                   <i className="fa fa-envelope-open text-dark"></i>
                 </div>
                 <div className="ms-3">
@@ -72,7 +72,7 @@ export default function ContactPage() {
                     <div className="form-floating">
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control rounded"
                         id="name"
                         placeholder="Your Name"
                       />
@@ -83,7 +83,7 @@ export default function ContactPage() {
                     <div className="form-floating">
                       <input
                         type="email"
-                        className="form-control"
+                        className="form-control rounded"
                         id="email"
                         placeholder="Your Email"
                       />
@@ -94,7 +94,7 @@ export default function ContactPage() {
                     <div className="form-floating">
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control rounded"
                         id="subject"
                         placeholder="Subject"
                       />
@@ -104,7 +104,7 @@ export default function ContactPage() {
                   <div className="col-12">
                     <div className="form-floating">
                       <textarea
-                        className="form-control"
+                        className="form-control rounded"
                         placeholder="Leave a message here"
                         id="message"
                         style={{height: '250px'}}
@@ -113,7 +113,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div className="col-12">
-                    <button className="btn btn-primary py-3 px-4" type="submit">
+                    <button className="btn btn-primary rounded py-3 px-4" type="submit">
                       Send Message
                     </button>
                   </div>
@@ -123,7 +123,7 @@ export default function ContactPage() {
                 <h5 className="mb-3">Connect With Us</h5>
                 <div className="d-flex">
                   <a
-                    className="btn btn-square btn-primary me-2"
+                    className="btn btn-square btn-primary rounded me-2"
                     href="https://www.linkedin.com/company/risenext"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -131,7 +131,7 @@ export default function ContactPage() {
                     <i className="fab fa-linkedin-in"></i>
                   </a>
                   <a
-                    className="btn btn-square btn-primary me-2"
+                    className="btn btn-square btn-primary rounded me-2"
                     href="https://www.instagram.com/risenext"
                     target="_blank"
                     rel="noopener noreferrer"

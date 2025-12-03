@@ -166,7 +166,7 @@ export default function OpportunityDetailPage({params}: {params: {slug: string}}
                   href={placeholderOpportunity.applicationFormUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-primary py-3 px-5 w-100"
+                  className="btn btn-primary rounded py-3 px-5 w-100"
                 >
                   Apply Now
                   <i className="fa fa-arrow-right ms-2"></i>
@@ -178,7 +178,7 @@ export default function OpportunityDetailPage({params}: {params: {slug: string}}
                 <h5 className="mb-3">Share This Opportunity</h5>
                 <div className="d-flex">
                   <a
-                    className="btn btn-square btn-primary me-2"
+                    className="btn btn-square btn-primary rounded me-2"
                     href="https://www.linkedin.com/company/risenext"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -186,7 +186,7 @@ export default function OpportunityDetailPage({params}: {params: {slug: string}}
                     <i className="fab fa-linkedin-in"></i>
                   </a>
                   <a
-                    className="btn btn-square btn-primary me-2"
+                    className="btn btn-square btn-primary rounded me-2"
                     href="https://www.instagram.com/risenext"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -194,7 +194,7 @@ export default function OpportunityDetailPage({params}: {params: {slug: string}}
                     <i className="fab fa-instagram"></i>
                   </a>
                   <a
-                    className="btn btn-square btn-primary me-2"
+                    className="btn btn-square btn-primary rounded me-2"
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(placeholderOpportunity.title)}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -209,7 +209,7 @@ export default function OpportunityDetailPage({params}: {params: {slug: string}}
           {/* Back to Opportunities */}
           <div className="row mt-5">
             <div className="col-12 text-center">
-              <a href="/opportunities" className="btn btn-secondary py-3 px-5">
+              <a href="/opportunities" className="btn btn-secondary rounded py-3 px-5">
                 <i className="fa fa-arrow-left me-2"></i>
                 Back to All Opportunities
               </a>

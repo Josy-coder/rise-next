@@ -105,7 +105,7 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
 
               {/* Article Meta */}
               <div className="d-flex align-items-center mb-4">
-                <span className="badge bg-primary text-dark text-uppercase me-3">
+                <span className="badge bg-primary text-dark rounded text-uppercase me-3">
                   {placeholderArticle.category}
                 </span>
                 <small className="text-body me-3">
@@ -132,7 +132,11 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                 <h5 className="mb-3">Tags</h5>
                 <div className="d-flex flex-wrap bg-">
                   {placeholderArticle.tags.map((tag, index) => (
-                    <a key={index} href="#" className="badge bg-secondary text-primary me-2 mb-2 p-2">
+                    <a
+                      key={index}
+                      href="#"
+                      className="badge bg-secondary text-primary rounded me-2 mb-2 p-2"
+                    >
                       #{tag}
                     </a>
                   ))}
@@ -164,7 +168,7 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                 <h5 className="mb-0">Share This Article</h5>
                 <div className="d-flex">
                   <a
-                    className="btn btn-square btn-primary me-2"
+                    className="btn btn-square btn-primary rounded me-2"
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://risenext.org/news/' + params.slug)}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -172,7 +176,7 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                     <i className="fab fa-linkedin-in"></i>
                   </a>
                   <a
-                    className="btn btn-square btn-primary me-2"
+                    className="btn btn-square btn-primary rounded me-2"
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(placeholderArticle.title)}&url=${encodeURIComponent('https://risenext.org/news/' + params.slug)}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -180,7 +184,7 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                     <i className="fab fa-twitter"></i>
                   </a>
                   <a
-                    className="btn btn-square btn-primary me-2"
+                    className="btn btn-square btn-primary rounded me-2"
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://risenext.org/news/' + params.slug)}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -198,10 +202,10 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                 <div className="input-group">
                   <input
                     type="text"
-                    className="form-control p-3"
+                    className="form-control p-3 rounded-start"
                     placeholder="Search articles..."
                   />
-                  <button className="btn btn-primary px-4">
+                  <button className="btn btn-primary rounded-end px-4">
                     <i className="fa fa-search"></i>
                   </button>
                 </div>
@@ -210,22 +214,34 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
               {/* Categories */}
               <div className="mb-5 bg-secondary rounded p-4">
                 <h4 className="mb-4 text-primary">Categories</h4>
-                <div className="d-flex flex-column ">
-                  <a className="d-flex align-items-center text-white justify-content-between mb-3" href="#">
+                <div className="d-flex flex-column">
+                  <a
+                    className="category-link d-flex align-items-center text-white justify-content-between mb-3 p-2 rounded"
+                    href="#"
+                  >
                     <span>Announcements</span>
-                    <span className="badge bg-primary text-dark">12</span>
+                    <span className="badge bg-primary text-dark rounded">12</span>
                   </a>
-                  <a className="d-flex align-items-center text-white justify-content-between mb-3" href="#">
+                  <a
+                    className="category-link d-flex align-items-center text-white justify-content-between mb-3 p-2 rounded"
+                    href="#"
+                  >
                     <span>Articles</span>
-                    <span className="badge bg-primary text-dark">8</span>
+                    <span className="badge bg-primary text-dark rounded">8</span>
                   </a>
-                  <a className="d-flex align-items-center text-white justify-content-between mb-3" href="#">
+                  <a
+                    className="category-link d-flex align-items-center text-white justify-content-between mb-3 p-2 rounded"
+                    href="#"
+                  >
                     <span>Events</span>
-                    <span className="badge bg-primary text-dark">6</span>
+                    <span className="badge bg-primary text-dark rounded">6</span>
                   </a>
-                  <a className="d-flex align-items-center text-white  justify-content-between" href="#">
+                  <a
+                    className="category-link d-flex align-items-center text-white justify-content-between p-2 rounded"
+                    href="#"
+                  >
                     <span>Press Releases</span>
-                    <span className="badge bg-primary text-dark">4</span>
+                    <span className="badge bg-primary text-dark rounded">4</span>
                   </a>
                 </div>
               </div>
@@ -253,14 +269,13 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
 
           {/* Back to News */}
           <div className="row mt-5">
             <div className="col-12 text-center">
-              <a href="/news" className="btn btn-secondary py-3 px-5">
+              <a href="/news" className="btn btn-secondary rounded py-3 px-5">
                 <i className="fa fa-arrow-left me-2"></i>
                 Back to All News
               </a>

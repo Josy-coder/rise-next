@@ -1,7 +1,31 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import {useState} from 'react'
+
+const galleryImages = [
+  '/charitize-img/gallery-1.jpg',
+  '/charitize-img/gallery-2.jpg',
+  '/charitize-img/gallery-3.jpg',
+  '/charitize-img/gallery-4.jpg',
+  '/charitize-img/gallery-5.jpg',
+  '/charitize-img/gallery-6.jpg',
+]
 
 export default function Footer() {
+  const [showGalleryModal, setShowGalleryModal] = useState(false)
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+
+  const openGallery = (index: number) => {
+    setSelectedImageIndex(index)
+    setShowGalleryModal(true)
+  }
+
+  const closeGallery = () => {
+    setShowGalleryModal(false)
+  }
+
   return (
     <>
       {/* Newsletter Start */}
@@ -12,7 +36,7 @@ export default function Footer() {
               <h1 className="display-6 mb-4">Subscribe the Newsletter</h1>
               <div className="position-relative w-100 mb-2">
                 <input
-                  className="form-control border-0 w-100 ps-4 pe-5"
+                  className="form-control rounded border-0 w-100 ps-4 pe-5"
                   type="text"
                   placeholder="Enter Your Email"
                   style={{height: '60px'}}
@@ -24,7 +48,7 @@ export default function Footer() {
                   <i className="fa fa-paper-plane text-dark fs-4"></i>
                 </button>
               </div>
-              <p className="mb-0">Don't worry, we won't spam you with emails.</p>
+              <p className="mb-0 text-dark">Don't worry, we won't spam you with emails.</p>
             </div>
           </div>
         </div>
@@ -54,7 +78,7 @@ export default function Footer() {
               </p>
               <div className="d-flex pt-3">
                 <a
-                  className="btn btn-square btn-primary me-2"
+                  className="btn btn-square btn-primary rounded me-2"
                   href="https://www.linkedin.com/company/risenext"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -62,7 +86,7 @@ export default function Footer() {
                   <i className="fab fa-linkedin-in"></i>
                 </a>
                 <a
-                  className="btn btn-square btn-primary me-2"
+                  className="btn btn-square btn-primary rounded me-2"
                   href="https://www.instagram.com/risenext"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -99,60 +123,19 @@ export default function Footer() {
             <div className="col-lg-3 col-md-6">
               <h4 className="text-light mb-4">Gallery</h4>
               <div className="row g-2">
-                <div className="col-4">
-                  <Image
-                    className="img-fluid w-100"
-                    src="/charitize-img/gallery-1.jpg"
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                </div>
-                <div className="col-4">
-                  <Image
-                    className="img-fluid w-100"
-                    src="/charitize-img/gallery-2.jpg"
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                </div>
-                <div className="col-4">
-                  <Image
-                    className="img-fluid w-100"
-                    src="/charitize-img/gallery-3.jpg"
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                </div>
-                <div className="col-4">
-                  <Image
-                    className="img-fluid w-100"
-                    src="/charitize-img/gallery-4.jpg"
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                </div>
-                <div className="col-4">
-                  <Image
-                    className="img-fluid w-100"
-                    src="/charitize-img/gallery-5.jpg"
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                </div>
-                <div className="col-4">
-                  <Image
-                    className="img-fluid w-100"
-                    src="/charitize-img/gallery-6.jpg"
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                </div>
+                {galleryImages.map((image, index) => (
+                  <div key={index} className="col-4">
+                    <Image
+                      className="img-fluid w-100 rounded"
+                      src={image}
+                      alt=""
+                      width={100}
+                      height={100}
+                      style={{cursor: 'pointer', objectFit: 'cover'}}
+                      onClick={() => openGallery(index)}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -175,9 +158,109 @@ export default function Footer() {
       {/* Footer End */}
 
       {/* Back to Top */}
-      <a href="#" className="btn btn-lg btn-primary btn-lg-square back-to-top">
+      <a href="#" className="btn btn-lg btn-primary rounded btn-lg-square back-to-top">
         <i className="bi bi-arrow-up"></i>
       </a>
+
+      {/* Gallery Modal */}
+      {showGalleryModal && (
+        <div
+          className="modal fade show"
+          style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.9)'}}
+          onClick={closeGallery}
+        >
+          <div
+            className="modal-dialog modal-dialog-centered modal-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-content bg-transparent border-0">
+              <div className="modal-header border-0 pb-0">
+                <button
+                  type="button"
+                  className="btn-close btn-close-white ms-auto"
+                  onClick={closeGallery}
+                ></button>
+              </div>
+              <div className="modal-body p-4">
+                {/* Main Image Carousel - Large */}
+                <div className="owl-carousel gallery-carousel mb-4" id="galleryCarousel">
+                  {galleryImages.map((image, index) => (
+                    <div key={index} className="item">
+                      <img
+                        src={image}
+                        alt=""
+                        className="img-fluid w-100 rounded"
+                        style={{maxHeight: '70vh', objectFit: 'contain'}}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Thumbnail Navigation - Single Row Below */}
+                <div className="d-flex justify-content-center gap-2 flex-wrap">
+                  {galleryImages.map((image, index) => (
+                    <div key={index} style={{width: '100px'}}>
+                      <img
+                        src={image}
+                        alt=""
+                        className={`img-fluid w-100 rounded ${index === selectedImageIndex ? 'border border-3 border-primary' : 'border border-2 border-secondary'}`}
+                        style={{
+                          cursor: 'pointer',
+                          objectFit: 'cover',
+                          height: '70px',
+                          opacity: index === selectedImageIndex ? 1 : 0.6,
+                          transition: 'all 0.3s',
+                        }}
+                        onClick={() => {
+                          setSelectedImageIndex(index)
+                          const carousel = (window as any).$('#galleryCarousel')
+                          if (carousel && carousel.trigger) {
+                            carousel.trigger('to.owl.carousel', [index, 300])
+                          }
+                        }}
+                        onMouseEnter={(e) => {
+                          if (index !== selectedImageIndex) {
+                            e.currentTarget.style.opacity = '0.8'
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (index !== selectedImageIndex) {
+                            e.currentTarget.style.opacity = '0.6'
+                          }
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Initialize Owl Carousel for Gallery Modal */}
+      {showGalleryModal && (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              $(document).ready(function() {
+                $('#galleryCarousel').owlCarousel({
+                  items: 1,
+                  loop: true,
+                  nav: true,
+                  dots: false,
+                  autoplay: false,
+                  navText: [
+                    '<i class="fa fa-chevron-left fa-3x text-white"></i>',
+                    '<i class="fa fa-chevron-right fa-3x text-white"></i>'
+                  ],
+                  startPosition: ${selectedImageIndex}
+                });
+              });
+            `,
+          }}
+        />
+      )}
     </>
   )
 }

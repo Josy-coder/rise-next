@@ -23,21 +23,23 @@
   font-weight: 400 !important;
 }
 
-
 /*** Spinner ***/
 #spinner {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .5s ease-out, visibility 0s linear .5s;
-    z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.5s ease-out,
+    visibility 0s linear 0.5s;
+  z-index: 99999;
 }
 
 #spinner.show {
-    transition: opacity .5s ease-out, visibility 0s linear 0s;
-    visibility: visible;
-    opacity: 1;
+  transition:
+    opacity 0.5s ease-out,
+    visibility 0s linear 0s;
+  visibility: visible;
+  opacity: 1;
 }
-
 
 /*** Button ***/
 .btn {
@@ -95,7 +97,7 @@
 
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
-  color: var(--bs-white);
+  color: var(--bs-secondary);
 }
 
 .navbar .dropdown-toggle::after {
@@ -160,13 +162,15 @@
 .header-carousel .owl-nav .owl-next {
   width: 45px;
   height: 45px;
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+  background: var(--bs-secondary) !important;
   margin: 10px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
-  color: var(--bs-dark);
-  background: var(--bs-primary);
+  color: var(--bs-white) !important;
 }
 
 .page-header {
@@ -199,6 +203,7 @@
   outline: none !important;
   padding: 18px 20px 20px 28px;
   background: var(--bs-dark);
+  border-radius: 0.5rem;
 }
 
 .btn-play:before {
@@ -212,6 +217,7 @@
   width: 60px;
   height: 60px;
   background: var(--bs-dark);
+  border-radius: 0.5rem;
   animation: pulse-border 1500ms ease-out infinite;
 }
 
@@ -226,6 +232,7 @@
   width: 60px;
   height: 60px;
   background: var(--bs-dark);
+  border-radius: 0.5rem;
   transition: all 200ms;
 }
 
@@ -334,11 +341,13 @@
 .about-img::before {
   top: 0px;
   left: 0px;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .about-img::after {
   right: 0px;
   bottom: 0px;
+  border-top-left-radius: 0.5rem;
 }
 
 /*** Service ***/
@@ -533,12 +542,17 @@
   width: calc(50% + 45px);
   height: 100%;
   background: var(--bs-primary);
+  border-radius: 0.5rem;
   z-index: -1;
 }
 
 .testimonial-carousel .owl-nav {
   position: absolute;
   top: 50%;
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-left-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
   left: 1.5rem;
   transform: translateY(-50%);
   display: flex;
@@ -556,6 +570,7 @@
   font-size: 18px;
   color: var(--bs-white);
   background: var(--bs-secondary);
+  border-radius: 0.5rem !important;
   transition: 0.5s;
 }
 
@@ -607,4 +622,92 @@
 
 .footer .copyright {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/*** Pagination ***/
+.pagination .page-link {
+  border-radius: 0.25rem;
+  margin: 0 0.25rem;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: #ffc107 !important;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--bs-secondary);
+  border-color: var(--bs-secondary);
+  color: var(--bs-white);
+}
+
+/*** Categories ***/
+.categories a:hover,
+.categories a:hover span,
+.categories a:hover .text-body {
+  text-decoration: underline;
+  color: var(--bs-primary) !important;
+}
+
+/*** Rounded Corners ***/
+.rounded {
+  border-radius: 0.5rem !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+/* Individual corners */
+.rounded-top {
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+}
+
+.rounded-bottom {
+  border-bottom-left-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+}
+
+.rounded-start {
+  border-top-left-radius: 0.5rem !important;
+  border-bottom-left-radius: 0.5rem !important;
+}
+
+.rounded-end {
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+}
+
+/* Single corners */
+.rounded-top-start {
+  border-top-left-radius: 0.5rem !important;
+}
+
+.rounded-top-end {
+  border-top-right-radius: 0.5rem !important;
+}
+
+.rounded-bottom-start {
+  border-bottom-left-radius: 0.5rem !important;
+}
+
+.rounded-bottom-end {
+  border-bottom-right-radius: 0.5rem !important;
+}
+
+/*** Category Link Hover Effect ***/
+.category-link {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.category-link:hover {
+  background-color: var(--bs-primary) !important;
+  color: var(--bs-dark) !important;
+}
+
+.category-link:hover span {
+  color: var(--bs-dark) !important;
 }

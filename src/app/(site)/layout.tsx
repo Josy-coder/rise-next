@@ -1,5 +1,5 @@
-import NavbarWrapper from '@/components/layout/NavbarWrapper'
-import FooterWrapper from '@/components/layout/FooterWrapper'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
 import UTMTracker from '@/components/UTMTracker'
 
 export default function SiteLayout({children}: {children: React.ReactNode}) {
@@ -7,9 +7,9 @@ export default function SiteLayout({children}: {children: React.ReactNode}) {
     <>
       <UTMTracker />
       <div className="min-h-screen flex flex-col">
-        <NavbarWrapper />
+        <Navbar />
         <main className="flex-grow">{children}</main>
-        <FooterWrapper />
+        <Footer />
       </div>
     </>
   )
