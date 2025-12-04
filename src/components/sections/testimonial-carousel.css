@@ -1,0 +1,81 @@
+.testimonial-carousel-wrapper {
+  position: relative;
+}
+
+.testimonial-carousel-slide {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.testimonial-carousel-slide.animating {
+  animation: fadeOut 1s ease-in-out;
+}
+
+/* Fade In animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Fade Out animation */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Navigation buttons styling - matching Owl Carousel style */
+.testimonial-carousel-wrapper .testimonial-nav {
+  position: absolute;
+  top: 50%;
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-left-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+  left: 1.5rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.testimonial-carousel-wrapper .testimonial-prev,
+.testimonial-carousel-wrapper .testimonial-next {
+  width: 45px;
+  height: 45px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--bs-white);
+  background: var(--bs-secondary);
+  border-radius: 0.5rem !important;
+  transition: 0.5s;
+  border: none;
+  cursor: pointer;
+}
+
+.testimonial-carousel-wrapper .testimonial-prev:hover,
+.testimonial-carousel-wrapper .testimonial-next:hover {
+  color: var(--bs-secondary);
+  background: var(--bs-white);
+}
+
+.testimonial-carousel-wrapper .testimonial-prev:disabled,
+.testimonial-carousel-wrapper .testimonial-next:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .testimonial-carousel-wrapper .testimonial-nav {
+    top: 6.3rem;
+  }
+}

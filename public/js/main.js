@@ -1,6 +1,45 @@
 ;(function ($) {
   'use strict'
 
+  // Skip initialization if already done in this session
+  if (sessionStorage.getItem('scriptsInitialized')) {
+    // Just reinitialize carousels for new page
+    if ($('.header-carousel').length > 0 && !$('.header-carousel').hasClass('owl-loaded')) {
+      $('.header-carousel').owlCarousel({
+        animateOut: 'rotateOutUpRight',
+        animateIn: 'rotateInDownLeft',
+        items: 1,
+        autoplay: true,
+        smartSpeed: 1000,
+        dots: false,
+        loop: true,
+        nav: true,
+        navText: ['<i class="bi bi-chevron-left"></i>', '<i class="bi bi-chevron-right"></i>'],
+      })
+    }
+
+    if (
+      $('.testimonial-carousel').length > 0 &&
+      !$('.testimonial-carousel').hasClass('owl-loaded')
+    ) {
+      $('.testimonial-carousel').owlCarousel({
+        items: 1,
+        autoplay: true,
+        smartSpeed: 1000,
+        animateIn: 'fadeIn',
+        animateOut: 'fadeOut',
+        dots: false,
+        loop: true,
+        nav: true,
+        navText: ['<i class="bi bi-chevron-left"></i>', '<i class="bi bi-chevron-right"></i>'],
+      })
+    }
+    return
+  }
+
+  // Mark as initialized
+  sessionStorage.setItem('scriptsInitialized', 'true')
+
   // Spinner
   var spinner = function () {
     setTimeout(function () {

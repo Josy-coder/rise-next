@@ -1,10 +1,4 @@
-import {Metadata} from 'next'
-
-export const metadata: Metadata = {
-  title: 'Donate - RiseNext | Support Displaced Students',
-  description:
-    'Support RiseNext in empowering displaced students to access higher education. Your donation makes a lasting impact.',
-}
+"use client"
 
 export default function DonatePage() {
   return (

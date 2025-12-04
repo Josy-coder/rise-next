@@ -1,0 +1,96 @@
+.header-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: url(/img/bg.jpg) center center no-repeat;
+  background-size: cover;
+}
+
+.header-carousel-slide {
+  animation: rotateInDownLeft 1s ease-in-out;
+}
+
+.header-carousel-slide.animating-next {
+  animation: rotateOutUpRight 1s ease-in-out;
+}
+
+.header-carousel-slide.animating-prev {
+  animation: rotateOutUpLeft 1s ease-in-out;
+}
+
+/* Rotate In Down Left - Entry animation */
+@keyframes rotateInDownLeft {
+  0% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+  100% {
+    transform-origin: left bottom;
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+/* Rotate Out Up Right - Exit animation (going forward) */
+@keyframes rotateOutUpRight {
+  0% {
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+  100% {
+    transform-origin: right bottom;
+    transform: rotate3d(0, 0, 1, 90deg);
+    opacity: 0;
+  }
+}
+
+/* Rotate Out Up Left - Exit animation (going back) */
+@keyframes rotateOutUpLeft {
+  0% {
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+  100% {
+    transform-origin: left bottom;
+    transform: rotate3d(0, 0, 1, -45deg);
+    opacity: 0;
+  }
+}
+
+/* Navigation buttons styling */
+.header-carousel-wrapper .owl-nav {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.header-carousel-wrapper .owl-prev,
+.header-carousel-wrapper .owl-next {
+  width: 45px;
+  height: 45px;
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+  background: var(--bs-secondary) !important;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--bs-white) !important;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.header-carousel-wrapper .owl-prev:hover,
+.header-carousel-wrapper .owl-next:hover {
+  background: var(--bs-primary) !important;
+}
+
+.header-carousel-wrapper .owl-prev:disabled,
+.header-carousel-wrapper .owl-next:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

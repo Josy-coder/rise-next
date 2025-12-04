@@ -1,85 +1,13 @@
-import {Metadata} from 'next'
+"use client"
 
-export const metadata: Metadata = {
-  title: 'Home - RiseNext | Empowering Displaced Students',
-  description:
-    'Together for a Better Tomorrow. We believe in creating opportunities and empowering communities through education, mentorship, and sustainable development.',
-}
+import HeroCarousel from "@/components/sections/HeroCarousel"
 
 export default function HomePage() {
   return (
     <>
-      {/* Spinner Start */}
-      <div
-        id="spinner"
-        className="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
-      >
-        <div
-          className="spinner-border text-primary"
-          role="status"
-          style={{width: '3rem', height: '3rem'}}
-        ></div>
-      </div>
-      {/* Spinner End */}
 
-      {/* Carousel Start */}
-      <div className="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
-        <div className="owl-carousel header-carousel py-3">
-          <div className="container py-3">
-            <div className="row g-5 align-items-center">
-              <div className="col-lg-6">
-                <div className="carousel-text">
-                  <h1 className="display-4 text-uppercase mb-3">Together for a Better Tomorrow</h1>
-                  <p className="fs-5 mb-5">
-                    We believe in creating opportunities and empowering communities through
-                    education, healthcare, and sustainable development.
-                  </p>
-                  <div className="d-flex">
-                    <a className="btn btn-primary rounded py-3 px-4 me-3" href="">
-                      Donate Now
-                    </a>
-                    <a className="btn btn-secondary rounded py-3 px-4" href="">
-                      Join Us Now
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="carousel-img">
-                  <img className="w-100 rounded" src="/charitize-img/carousel-1.jpg" alt="Image" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="container py-3">
-            <div className="row g-5 align-items-center">
-              <div className="col-lg-6">
-                <div className="carousel-text">
-                  <h1 className="display-4 text-uppercase mb-3">Together, We Can End Hunger</h1>
-                  <p className="fs-5 mb-5">
-                    No one should go to bed hungry. Your support helps us bring smiles, hope, and a
-                    brighter future to those in need.
-                  </p>
-                  <div className="d-flex mt-4">
-                    <a className="btn btn-primary rounded py-3 px-4 me-3" href="">
-                      Donate Now
-                    </a>
-                    <a className="btn btn-secondary rounded py-3 px-4" href="">
-                      Join Us Now
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="carousel-img">
-                  <img className="w-100 rounded" src="/charitize-img/carousel-2.jpg" alt="Image" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Carousel End */}
+
+      <HeroCarousel />
 
       {/* Video Start */}
       <div className="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s">
@@ -155,7 +83,11 @@ export default function HomePage() {
           <div className="row g-5 align-items-center">
             <div className="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
               <div className="about-img">
-                <img className="img-fluid w-100 rounded" src="/charitize-img/about.jpg" alt="Image" />
+                <img
+                  className="img-fluid w-100 rounded"
+                  src="/charitize-img/about.jpg"
+                  alt="Image"
+                />
               </div>
             </div>
             <div className="col-lg-6">

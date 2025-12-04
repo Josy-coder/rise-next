@@ -1,10 +1,4 @@
-import {Metadata} from 'next'
-
-export const metadata: Metadata = {
-  title: 'News & Announcements - RiseNext | Latest Updates',
-  description:
-    'Stay updated with the latest news, announcements, and stories from RiseNext and our community of displaced students.',
-}
+"use client"
 
 // Placeholder data - will be replaced with Sanity later
 const placeholderNews = [

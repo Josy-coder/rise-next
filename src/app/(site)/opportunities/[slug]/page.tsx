@@ -47,7 +47,8 @@ export const metadata: Metadata = {
   description: placeholderOpportunity.excerpt,
 }
 
-export default function OpportunityDetailPage({params}: {params: {slug: string}}) {
+export default async function OpportunityDetailPage({params}: {params: Promise<{slug: string}>}) {
+  const {slug: _slug} = await params
   return (
     <>
       {/* Page Header Start */}

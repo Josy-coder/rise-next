@@ -77,7 +77,8 @@ export const metadata: Metadata = {
   description: placeholderArticle.excerpt,
 }
 
-export default function NewsDetailPage({params}: {params: {slug: string}}) {
+export default async function NewsDetailPage({params}: {params: Promise<{slug: string}>}) {
+  const {slug} = await params
   return (
     <>
       {/* Page Header Start */}
@@ -169,7 +170,7 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                 <div className="d-flex">
                   <a
                     className="btn btn-square btn-primary rounded me-2"
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://risenext.org/news/' + params.slug)}`}
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://risenext.org/news/' + slug)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -177,7 +178,7 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                   </a>
                   <a
                     className="btn btn-square btn-primary rounded me-2"
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(placeholderArticle.title)}&url=${encodeURIComponent('https://risenext.org/news/' + params.slug)}`}
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(placeholderArticle.title)}&url=${encodeURIComponent('https://risenext.org/news/' + slug)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -185,7 +186,7 @@ export default function NewsDetailPage({params}: {params: {slug: string}}) {
                   </a>
                   <a
                     className="btn btn-square btn-primary rounded me-2"
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://risenext.org/news/' + params.slug)}`}
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://risenext.org/news/' + slug)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

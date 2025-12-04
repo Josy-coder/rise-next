@@ -1,10 +1,4 @@
-import {Metadata} from 'next'
-
-export const metadata: Metadata = {
-  title: 'Opportunities - RiseNext | Career, Volunteering & Cohort Applications',
-  description:
-    'Explore career opportunities, volunteering positions, and cohort applications at RiseNext. Join us in empowering displaced students.',
-}
+"use client"
 
 // Placeholder data - will be replaced with Sanity later
 const placeholderOpportunities = [

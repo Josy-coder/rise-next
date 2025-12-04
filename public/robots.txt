@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /studio
+Disallow: /api
+
+# Host
+Host: https://rise-next.org
+
+# Sitemaps
+Sitemap: https://rise-next.org/sitemap.xml

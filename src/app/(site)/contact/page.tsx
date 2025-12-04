@@ -1,10 +1,4 @@
-import {Metadata} from 'next'
-
-export const metadata: Metadata = {
-  title: 'Contact Us - RiseNext | Get in Touch',
-  description:
-    'Contact RiseNext to learn more about our mentoring program for displaced students. Located in Kigali, Rwanda.',
-}
+"use client"
 
 export default function ContactPage() {
   return (

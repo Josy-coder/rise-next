@@ -1,17 +1,8 @@
-import {Metadata} from 'next'
-
-export const metadata: Metadata = {
-  title: 'About Us - RiseNext | Empowering Displaced Students',
-  description:
-    'Learn about RiseNext, a mentoring program bridging the knowledge gap for forcibly displaced high school and university students to access higher education opportunities.',
-}
+'use client'
 
 export default function AboutPage() {
   return (
     <>
-
-
-
       {/* About Start */}
       <div className="container-fluid py-5">
         <div className="container">
@@ -26,7 +17,9 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="col-lg-6">
-              <p className="section-title bg-white text-start text-primary pe-3 fw-bold">About Us</p>
+              <p className="section-title bg-white text-start text-primary pe-3 fw-bold">
+                About Us
+              </p>
               <h1 className="display-6 mb-4 wow fadeIn" data-wow-delay="0.2s">
                 Empowering Displaced Students Through Education
               </h1>
@@ -56,12 +49,12 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
-                  <div className="h-100 bg-primary p-4 text-center">
+                  <div className="h-100 bg-primary rounded p-4 text-center">
                     <p className="fs-5 text-dark">
                       Join us in creating pathways to higher education for displaced students around
                       the world.
                     </p>
-                    <a className="btn btn-secondary py-2 px-4" href="/contact">
+                    <a className="btn btn-secondary rounded py-2 px-4" href="/contact">
                       Get Involved
                     </a>
                   </div>
@@ -73,86 +66,112 @@ export default function AboutPage() {
       </div>
       {/* About End */}
 
-      {/* Features Start */}
-      <div className="container-fluid py-5">
+      {/* Cohorts Start */}
+      <div className="container-fluid bg-light py-5">
         <div className="container">
-          <div className="row g-5 align-items-center">
-            <div className="col-lg-6">
-              <div className="rounded overflow-hidden">
-                <div className="row g-0">
-                  <div className="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
-                    <div className="text-center bg-primary py-5 px-4 h-100">
-                      <i className="fa fa-users fa-3x text-secondary mb-3"></i>
-                      <h1 className="display-5 mb-0" data-toggle="counter-up">
-                        500
-                      </h1>
-                      <span className="text-dark">Students Mentored</span>
-                    </div>
+          <div
+            className="text-center mx-auto wow fadeIn"
+            data-wow-delay="0.1s"
+            style={{maxWidth: '500px'}}
+          >
+            <h1 className="display-6 mb-4">Meet Our Mentee Cohorts</h1>
+          </div>
+          <div className="row g-4">
+            <div className="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.1s">
+              <div className="bg-white rounded h-100 p-5">
+                <div className="d-flex align-items-center mb-4">
+                  <div className="btn-lg-square bg-secondary rounded text-white flex-shrink-0">
+                    <i className="fa fa-graduation-cap fa-2x"></i>
                   </div>
-                  <div className="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
-                    <div className="text-center bg-secondary py-5 px-4 h-100">
-                      <i className="fa fa-award fa-3x text-primary mb-3"></i>
-                      <h1 className="display-5 text-white mb-0" data-toggle="counter-up">
-                        1
-                      </h1>
-                      <span className="text-white">Award Winning</span>
-                    </div>
-                  </div>
-                  <div className="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
-                    <div className="text-center bg-secondary py-5 px-4 h-100">
-                      <i className="fa fa-list-check fa-3x text-primary mb-3"></i>
-                      <h1 className="display-5 text-white mb-0" data-toggle="counter-up">
-                        3000
-                      </h1>
-                      <span className="text-white">Opportunities Shared</span>
-                    </div>
-                  </div>
-                  <div className="col-sm-6 wow fadeIn" data-wow-delay="0.7s">
-                    <div className="text-center bg-primary py-5 px-4 h-100">
-                      <i className="fa fa-globe fa-3x text-secondary mb-3"></i>
-                      <h1 className="display-5 mb-0" data-toggle="counter-up">
-                        50
-                      </h1>
-                      <span className="text-dark">Countries Reached</span>
-                    </div>
+                  <div className="ps-3">
+                    <h4 className="mb-0">Cohort 1</h4>
+                    <span className="text-muted">September 2024</span>
                   </div>
                 </div>
+                <p className="mb-4">
+                  Our inaugural cohort of 45 mentees from refugee camps across East Africa, focused
+                  on college application guidance and scholarship opportunities.
+                </p>
+                <div className="d-flex justify-content-between mb-2">
+                  <span className="text-dark">
+                    <i className="fa fa-users text-secondary me-2"></i>45 Mentees
+                  </span>
+                </div>
+                <div className="progress rounded mb-3" style={{height: '5px'}}>
+                  <div
+                    className="progress-bar bg-primary rounded-end"
+                    role="progressbar"
+                    style={{width: '100%'}}
+                  ></div>
+                </div>
+                <span className="badge bg-success rounded">Completed</span>
               </div>
             </div>
-            <div className="col-lg-6">
-              <p className="section-title bg-white text-start text-primary pe-3">Why RiseNext!</p>
-              <h1 className="display-6 mb-4 wow fadeIn" data-wow-delay="0.2s">
-                Why Choose RiseNext?
-              </h1>
-              <p className="mb-4 wow fadeIn" data-wow-delay="0.3s">
-                We are dedicated to creating opportunities and empowering displaced students through
-                education, mentorship, and access to global opportunities. Your support helps us
-                bring hope and a brighter future to those in need.
-              </p>
-              <p className="text-dark wow fadeIn" data-wow-delay="0.4s">
-                <i className="fa fa-check text-primary me-2"></i>Proven track record of success
-              </p>
-              <p className="text-dark wow fadeIn" data-wow-delay="0.5s">
-                <i className="fa fa-check text-primary me-2"></i>Personalized mentorship programs
-              </p>
-              <p className="text-dark wow fadeIn" data-wow-delay="0.6s">
-                <i className="fa fa-check text-primary me-2"></i>Global network of opportunities
-              </p>
-              <div className="d-flex mt-4 wow fadeIn" data-wow-delay="0.7s">
-                <a className="btn btn-primary py-3 px-4 me-3" href="/opportunities">
-                  View Opportunities
-                </a>
-                <a className="btn btn-secondary py-3 px-4" href="/contact">
-                  Join Us Now
-                </a>
+            <div className="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.3s">
+              <div className="bg-white rounded h-100 p-5">
+                <div className="d-flex align-items-center mb-4">
+                  <div className="btn-lg-square bg-secondary rounded text-white flex-shrink-0">
+                    <i className="fa fa-graduation-cap fa-2x"></i>
+                  </div>
+                  <div className="ps-3">
+                    <h4 className="mb-0">Cohort 2</h4>
+                    <span className="text-muted">January 2025</span>
+                  </div>
+                </div>
+                <p className="mb-4">
+                  Our second cohort expanded to 60 mentees with a focus on university transition
+                  support and career development pathways.
+                </p>
+                <div className="d-flex justify-content-between mb-2">
+                  <span className="text-dark">
+                    <i className="fa fa-users text-secondary me-2"></i>60 Mentees
+                  </span>
+                </div>
+                <div className="progress rounded mb-3" style={{height: '5px'}}>
+                  <div
+                    className="progress-bar bg-primary rounded-end"
+                    role="progressbar"
+                    style={{width: '75%'}}
+                  ></div>
+                </div>
+                <span className="badge bg-primary text-dark rounded">Active</span>
+              </div>
+            </div>
+            <div className="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.5s">
+              <div className="bg-white rounded h-100 p-5">
+                <div className="d-flex align-items-center mb-4">
+                  <div className="btn-lg-square bg-secondary rounded text-white flex-shrink-0">
+                    <i className="fa fa-graduation-cap fa-2x"></i>
+                  </div>
+                  <div className="ps-3">
+                    <h4 className="mb-0">Cohort 3</h4>
+                    <span className="text-muted">May 2025</span>
+                  </div>
+                </div>
+                <p className="mb-4">
+                  Our upcoming cohort will support 75 mentees with enhanced programming including
+                  skills training and internship connections.
+                </p>
+                <div className="d-flex justify-content-between mb-2">
+                  <span className="text-dark">
+                    <i className="fa fa-users text-secondary me-2"></i>75 Mentees
+                  </span>
+                </div>
+                <div className="progress mb-3 rounded" style={{height: '5px'}}>
+                  <div
+                    className="progress-bar bg-secondary rounded-end"
+                    role="progressbar"
+                    style={{width: '25%'}}
+                  ></div>
+                </div>
+                <span className="badge bg-dark text-primary rounded">Upcoming</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* Features End */}
+      {/* Cohorts End */}
 
-      
       {/* Video Start */}
       <div className="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div className="container">
@@ -220,7 +239,7 @@ export default function AboutPage() {
         </div>
       </div>
       {/* Video Modal End */}
-      
+
       {/* Team Start */}
       <div className="container-fluid py-5">
         <div className="container">
@@ -229,130 +248,98 @@ export default function AboutPage() {
             data-wow-delay="0.1s"
             style={{maxWidth: '500px'}}
           >
-            <p className="section-title bg-white text-center text-primary px-3">Our Team</p>
+            <p className="section-title bg-white text-center text-primary px-3 fw-bold">Our Team</p>
             <h1 className="display-6 mb-4">Meet Our Founders - Team Eagles</h1>
           </div>
           <div className="row g-4">
             <div className="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-              <div className="team-item d-flex h-100 p-4">
+              <div className="team-item bg-light rounded d-flex h-100 p-4">
                 <div className="team-detail pe-4">
                   <img
-                    className="img-fluid mb-4"
+                    className="img-fluid rounded mb-4"
                     src="/charitize-img/team-1.jpg"
                     alt="Amina Mkova"
                   />
                   <h3>Amina Mkova</h3>
                   <span>Co-Founder</span>
                 </div>
-                <div className="team-social bg-light d-flex flex-column justify-content-center flex-shrink-0 p-4">
+                <div className="team-social bg-secondary rounded d-flex flex-column justify-content-center flex-shrink-0 p-4">
                   <a
-                    className="btn btn-square btn-primary my-2"
+                    className="btn btn-square btn-primary rounded my-2"
                     href="https://www.linkedin.com/company/risenext"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <i className="fab fa-linkedin-in"></i>
                   </a>
-                  <a
-                    className="btn btn-square btn-primary my-2"
-                    href="https://www.instagram.com/risenext"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="fab fa-instagram"></i>
-                  </a>
                 </div>
               </div>
             </div>
             <div className="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-              <div className="team-item d-flex h-100 p-4">
+              <div className="team-item bg-light rounded d-flex h-100 p-4">
                 <div className="team-detail pe-4">
                   <img
-                    className="img-fluid mb-4"
+                    className="img-fluid rounded mb-4"
                     src="/charitize-img/team-2.jpg"
                     alt="Obed Korusenge"
                   />
                   <h3>Obed Korusenge</h3>
                   <span>Co-Founder</span>
                 </div>
-                <div className="team-social bg-light d-flex flex-column justify-content-center flex-shrink-0 p-4">
+                <div className="team-social bg-secondary rounded d-flex flex-column justify-content-center flex-shrink-0 p-4">
                   <a
-                    className="btn btn-square btn-primary my-2"
+                    className="btn btn-square btn-primary rounded my-2"
                     href="https://www.linkedin.com/company/risenext"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <i className="fab fa-linkedin-in"></i>
                   </a>
-                  <a
-                    className="btn btn-square btn-primary my-2"
-                    href="https://www.instagram.com/risenext"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="fab fa-instagram"></i>
-                  </a>
                 </div>
               </div>
             </div>
             <div className="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-              <div className="team-item d-flex h-100 p-4">
+              <div className="team-item bg-light rounded d-flex h-100 p-4">
                 <div className="team-detail pe-4">
                   <img
-                    className="img-fluid mb-4"
+                    className="img-fluid rounded mb-4"
                     src="/charitize-img/team-3.jpg"
                     alt="Joselyto Charite"
                   />
                   <h3>Joselyto Charite</h3>
                   <span>Co-Founder</span>
                 </div>
-                <div className="team-social bg-light d-flex flex-column justify-content-center flex-shrink-0 p-4">
+                <div className="team-social bg-secondary rounded d-flex flex-column justify-content-center flex-shrink-0 p-4">
                   <a
-                    className="btn btn-square btn-primary my-2"
+                    className="btn btn-square btn-primary rounded my-2"
                     href="https://www.linkedin.com/company/risenext"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <i className="fab fa-linkedin-in"></i>
                   </a>
-                  <a
-                    className="btn btn-square btn-primary my-2"
-                    href="https://www.instagram.com/risenext"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="fab fa-instagram"></i>
-                  </a>
                 </div>
               </div>
             </div>
             <div className="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-              <div className="team-item d-flex h-100 p-4">
+              <div className="team-item bg-light rounded d-flex h-100 p-4">
                 <div className="team-detail pe-4">
                   <img
-                    className="img-fluid mb-4"
+                    className="img-fluid rounded mb-4"
                     src="/charitize-img/team-1.jpg"
                     alt="Nimco Ibrahim"
                   />
                   <h3>Nimco Ibrahim</h3>
                   <span>Co-Founder</span>
                 </div>
-                <div className="team-social bg-light d-flex flex-column justify-content-center flex-shrink-0 p-4">
+                <div className="team-social bg-secondary rounded d-flex flex-column justify-content-center flex-shrink-0 p-4">
                   <a
-                    className="btn btn-square btn-primary my-2"
+                    className="btn btn-square btn-primary rounded my-2"
                     href="https://www.linkedin.com/company/risenext"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <i className="fab fa-linkedin-in"></i>
-                  </a>
-                  <a
-                    className="btn btn-square btn-primary my-2"
-                    href="https://www.instagram.com/risenext"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="fab fa-instagram"></i>
                   </a>
                 </div>
               </div>
