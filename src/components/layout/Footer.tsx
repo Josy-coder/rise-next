@@ -3,9 +3,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import {useState} from 'react'
+import Gallery from '@/components/ui/Gallery'
 
 const galleryImages = [
-  '/charitize-img/gallery-1.jpg',
+  '/charitize-img/event-1.jpg',
   '/charitize-img/gallery-2.jpg',
   '/charitize-img/gallery-3.jpg',
   '/charitize-img/gallery-4.jpg',
@@ -163,104 +164,12 @@ export default function Footer() {
       </a>
 
       {/* Gallery Modal */}
-      {showGalleryModal && (
-        <div
-          className="modal fade show"
-          style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.9)'}}
-          onClick={closeGallery}
-        >
-          <div
-            className="modal-dialog modal-dialog-centered modal-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-content bg-transparent border-0">
-              <div className="modal-header border-0 pb-0">
-                <button
-                  type="button"
-                  className="btn-close btn-close-white ms-auto"
-                  onClick={closeGallery}
-                ></button>
-              </div>
-              <div className="modal-body p-4">
-                {/* Main Image Carousel - Large */}
-                <div className="owl-carousel gallery-carousel mb-4" id="galleryCarousel">
-                  {galleryImages.map((image, index) => (
-                    <div key={index} className="item">
-                      <img
-                        src={image}
-                        alt=""
-                        className="img-fluid w-100 rounded"
-                        style={{maxHeight: '70vh', objectFit: 'contain'}}
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                {/* Thumbnail Navigation - Single Row Below */}
-                <div className="d-flex justify-content-center gap-2 flex-wrap">
-                  {galleryImages.map((image, index) => (
-                    <div key={index} style={{width: '100px'}}>
-                      <img
-                        src={image}
-                        alt=""
-                        className={`img-fluid w-100 rounded ${index === selectedImageIndex ? 'border border-3 border-primary' : 'border border-2 border-secondary'}`}
-                        style={{
-                          cursor: 'pointer',
-                          objectFit: 'cover',
-                          height: '70px',
-                          opacity: index === selectedImageIndex ? 1 : 0.6,
-                          transition: 'all 0.3s',
-                        }}
-                        onClick={() => {
-                          setSelectedImageIndex(index)
-                          const carousel = (window as any).$('#galleryCarousel')
-                          if (carousel && carousel.trigger) {
-                            carousel.trigger('to.owl.carousel', [index, 300])
-                          }
-                        }}
-                        onMouseEnter={(e) => {
-                          if (index !== selectedImageIndex) {
-                            e.currentTarget.style.opacity = '0.8'
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (index !== selectedImageIndex) {
-                            e.currentTarget.style.opacity = '0.6'
-                          }
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Initialize Owl Carousel for Gallery Modal */}
-      {showGalleryModal && (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              $(document).ready(function() {
-                $('#galleryCarousel').owlCarousel({
-                  items: 1,
-                  loop: true,
-                  nav: true,
-                  dots: false,
-                  autoplay: false,
-                  navText: [
-                    '<i class="fa fa-chevron-left fa-3x text-white"></i>',
-                    '<i class="fa fa-chevron-right fa-3x text-white"></i>'
-                  ],
-                  startPosition: ${selectedImageIndex}
-                });
-              });
-            `,
-          }}
-        />
-      )}
+      <Gallery
+        images={galleryImages}
+        isOpen={showGalleryModal}
+        onClose={closeGallery}
+        initialIndex={selectedImageIndex}
+      />
     </>
   )
 }

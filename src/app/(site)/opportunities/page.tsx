@@ -225,7 +225,7 @@ export default function OpportunitiesPage() {
             We're always looking for passionate individuals to join our mission. Reach out to us to
             discuss other ways you can contribute to empowering displaced students.
           </p>
-          <a href="/contact" className="btn btn-primary py-3 px-5">
+          <a href="/contact" className="btn btn-primary rounded py-3 px-5">
             Get In Touch
           </a>
         </div>

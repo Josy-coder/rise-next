@@ -10,7 +10,7 @@ export default function AboutPage() {
             <div className="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
               <div className="about-img">
                 <img
-                  className="img-fluid w-100"
+                  className="img-fluid rounded w-100"
                   src="/charitize-img/about.jpg"
                   alt="About RiseNext"
                 />
