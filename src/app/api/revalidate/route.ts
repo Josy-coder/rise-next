@@ -1,6 +1,8 @@
 import {revalidateTag} from 'next/cache'
 import {NextRequest, NextResponse} from 'next/server'
 
+export const runtime = 'edge'
+
 // This endpoint will be called by Sanity webhooks to revalidate content
 export async function POST(request: NextRequest) {
   try {

@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 export const metadata = {
   title: 'RiseNext Studio',
   description: 'Content management for RiseNext website',

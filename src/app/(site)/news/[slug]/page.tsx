@@ -1,5 +1,7 @@
 import {Metadata} from 'next'
 
+export const runtime = 'edge'
+
 // Placeholder data - will be replaced with Sanity later
 const placeholderArticle = {
   title: 'RiseNext Wins 2024 CIEE UNHCR Student Challenge',
