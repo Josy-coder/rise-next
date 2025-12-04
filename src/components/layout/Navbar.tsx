@@ -50,11 +50,6 @@ export default function Navbar({siteSettings}: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close menu on route change
-  useEffect(() => {
-    setIsMenuOpen(false)
-  }, [pathname])
-
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
@@ -232,6 +227,7 @@ export default function Navbar({siteSettings}: NavbarProps) {
                       href="/"
                       className={`nav-item nav-link ${isActive('/')}`}
                       data-prefetch="true"
+                      onClick={() => setIsMenuOpen(false)}
                     >
                       Home
                     </a>
@@ -239,6 +235,7 @@ export default function Navbar({siteSettings}: NavbarProps) {
                       href="/about"
                       className={`nav-item nav-link ${isActive('/about')}`}
                       data-prefetch="true"
+                      onClick={() => setIsMenuOpen(false)}
                     >
                       About
                     </a>
@@ -246,6 +243,7 @@ export default function Navbar({siteSettings}: NavbarProps) {
                       href="/opportunities"
                       className={`nav-item nav-link ${isActive('/opportunities')}`}
                       data-prefetch="true"
+                      onClick={() => setIsMenuOpen(false)}
                     >
                       Opportunities
                     </a>
@@ -253,6 +251,7 @@ export default function Navbar({siteSettings}: NavbarProps) {
                       href="/news"
                       className={`nav-item nav-link ${isActive('/news')}`}
                       data-prefetch="true"
+                      onClick={() => setIsMenuOpen(false)}
                     >
                       News
                     </a>
@@ -260,6 +259,7 @@ export default function Navbar({siteSettings}: NavbarProps) {
                       href="/contact"
                       className={`nav-item nav-link ${isActive('/contact')}`}
                       data-prefetch="true"
+                      onClick={() => setIsMenuOpen(false)}
                     >
                       Contact
                     </a>
