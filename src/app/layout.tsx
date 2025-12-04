@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     revalidate: revalidationTimes.siteSettings,
   })
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://risenext.org'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://rise-next.org'
 
   return {
     title: {
