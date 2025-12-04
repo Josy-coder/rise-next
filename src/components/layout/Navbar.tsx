@@ -1,12 +1,35 @@
 'use client'
 
 import {usePathname} from 'next/navigation'
+import Image from 'next/image'
 
-export default function Navbar() {
+interface SiteSettings {
+  title: string
+  logo?: string
+  contactEmail?: string
+  contactPhone?: string
+  location?: {
+    addressLine1?: string
+    addressLine2?: string
+    city?: string
+    country?: string
+  }
+  socialLinks?: {
+    facebook?: string
+    linkedin?: string
+    instagram?: string
+  }
+}
+
+interface NavbarProps {
+  siteSettings: SiteSettings
+}
+
+export default function Navbar({siteSettings}: NavbarProps) {
   const pathname = usePathname()
 
   const isActive = (path: string) => {
-    return pathname === path ? 'active fw-bold' : ''
+    return pathname === path ? 'active fw-bold text-decoration-underline' : ''
   }
 
   return (
@@ -16,7 +39,18 @@ export default function Navbar() {
         <div className="row align-items-center h-100">
           <div className="col-lg-4 text-center text-lg-start">
             <a href="/">
-              <img src="/logo.png" alt="RiseNext" style={{height: '80px', objectFit: 'contain'}} />
+              {siteSettings.logo ? (
+                <Image
+                  src={siteSettings.logo}
+                  alt={siteSettings.title}
+                  width={200}
+                  height={80}
+                  style={{height: '80px', width: 'auto', objectFit: 'contain'}}
+                  priority
+                />
+              ) : (
+                <h1 className="display-5 text-primary m-0">{siteSettings.title}</h1>
+              )}
             </a>
           </div>
           <div className="col-lg-8 d-none d-lg-block">
@@ -39,7 +73,9 @@ export default function Navbar() {
                   </div>
                   <div className="ms-2">
                     <h6 className="text-primary mb-0">Mail Us</h6>
-                    <span className="text-white">info@rise-next.org</span>
+                    <span className="text-white">
+                      {siteSettings.contactEmail || 'info@rise-next.org'}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -64,7 +100,7 @@ export default function Navbar() {
       <div className="container-fluid bg-secondary px-0 wow fadeIn" data-wow-delay="0.1s">
         <div className="nav-bar bg-secondary ">
           <nav className="navbar navbar-expand-lg bg-primary rounded-top navbar-dark px-4 py-lg-0">
-            <h4 className="d-lg-none m-0">RiseNext</h4>
+            <h4 className="d-lg-none m-0">{siteSettings.title}</h4>
             <button
               type="button"
               className="navbar-toggler bg-secondary rounded me-0"

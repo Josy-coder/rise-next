@@ -1,4 +1,4 @@
-import { type SchemaTypeDefinition } from 'sanity'
+import {type SchemaTypeDefinition} from 'sanity'
 
 // Import all schemas
 import siteSettings from './documents/siteSettings'
@@ -13,8 +13,10 @@ import committee from './documents/committee'
 import cohort from './documents/cohort'
 import testimony from './documents/testimony'
 import activity from './documents/activity'
+import newsletter from './documents/newsletter'
+import legalPage from './documents/legalPage'
 
-export const schema: { types: SchemaTypeDefinition[] } = {
+export const schema: {types: SchemaTypeDefinition[]} = {
   types: [
     // Singletons
     siteSettings,
@@ -22,7 +24,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     footer,
     homePage,
     aboutPage,
-    
+
     // Documents
     opportunity,
     news,
@@ -31,5 +33,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     cohort,
     testimony,
     activity,
+    newsletter,
+    legalPage,
   ],
 }

@@ -1,6 +1,6 @@
 import {Suspense} from 'react'
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
+import NavbarWrapper from '@/components/layout/NavbarWrapper'
+import FooterWrapper from '@/components/layout/FooterWrapper'
 import UTMTracker from '@/components/UTMTracker'
 
 export default function SiteLayout({children}: {children: React.ReactNode}) {
@@ -10,9 +10,9 @@ export default function SiteLayout({children}: {children: React.ReactNode}) {
         <UTMTracker />
       </Suspense>
       <div className="min-h-screen flex flex-col">
-        <Navbar />
+        <NavbarWrapper />
         <main className="flex-grow">{children}</main>
-        <Footer />
+        <FooterWrapper />
       </div>
     </>
   )

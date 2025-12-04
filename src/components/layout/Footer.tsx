@@ -6,7 +6,7 @@ import {useState} from 'react'
 import Gallery from '@/components/ui/Gallery'
 
 const galleryImages = [
-  '/charitize-img/event-1.jpg',
+  '/charitize-img/gallery-1.jpg',
   '/charitize-img/gallery-2.jpg',
   '/charitize-img/gallery-3.jpg',
   '/charitize-img/gallery-4.jpg',
@@ -14,7 +14,28 @@ const galleryImages = [
   '/charitize-img/gallery-6.jpg',
 ]
 
-export default function Footer() {
+interface SiteSettings {
+  title: string
+  contactEmail?: string
+  contactPhone?: string
+  location?: {
+    addressLine1?: string
+    addressLine2?: string
+    city?: string
+    country?: string
+  }
+  socialLinks?: {
+    facebook?: string
+    linkedin?: string
+    instagram?: string
+  }
+}
+
+interface FooterProps {
+  siteSettings: SiteSettings
+}
+
+export default function Footer({siteSettings}: FooterProps) {
   const [showGalleryModal, setShowGalleryModal] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
@@ -75,25 +96,40 @@ export default function Footer() {
                 <i className="fa fa-phone-alt me-3"></i>+250 787 973 747
               </p>
               <p className="mb-2">
-                <i className="fa fa-envelope me-3"></i>info@rise-next.org
+                <i className="fa fa-envelope me-3"></i>
+                {siteSettings.contactEmail || 'info@rise-next.org'}
               </p>
               <div className="d-flex pt-3">
-                <a
-                  className="btn btn-square btn-primary rounded me-2"
-                  href="https://www.linkedin.com/company/risenext"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-                <a
-                  className="btn btn-square btn-primary rounded me-2"
-                  href="https://www.instagram.com/risenext"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fab fa-instagram"></i>
-                </a>
+                {siteSettings.socialLinks?.linkedin && (
+                  <a
+                    className="btn btn-square btn-primary rounded me-2"
+                    href={siteSettings.socialLinks.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                )}
+                {siteSettings.socialLinks?.instagram && (
+                  <a
+                    className="btn btn-square btn-primary rounded me-2"
+                    href={siteSettings.socialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fab fa-instagram"></i>
+                  </a>
+                )}
+                {siteSettings.socialLinks?.facebook && (
+                  <a
+                    className="btn btn-square btn-primary rounded me-2"
+                    href={siteSettings.socialLinks.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                )}
               </div>
             </div>
             <div className="col-lg-3 col-md-6">

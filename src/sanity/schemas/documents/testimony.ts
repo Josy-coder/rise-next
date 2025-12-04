@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import {defineType, defineField} from 'sanity'
 
 export default defineType({
   name: 'testimony',
@@ -9,7 +9,7 @@ export default defineType({
       name: 'name',
       title: 'Name',
       type: 'string',
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'role',
@@ -30,14 +30,7 @@ export default defineType({
       title: 'Testimonial',
       type: 'text',
       rows: 5,
-      validation: Rule => Rule.required(),
-    }),
-    defineField({
-      name: 'rating',
-      title: 'Rating',
-      type: 'number',
-      validation: Rule => Rule.min(1).max(5),
-      description: 'Rating out of 5',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'featured',
@@ -50,7 +43,7 @@ export default defineType({
       name: 'cohort',
       title: 'Associated Cohort',
       type: 'reference',
-      to: [{ type: 'cohort' }],
+      to: [{type: 'cohort'}],
     }),
   ],
   preview: {
